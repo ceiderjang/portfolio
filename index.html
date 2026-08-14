@@ -1,0 +1,1810 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="蔡登健的个人作品集——AI 方向的设计、策划与视觉表达。">
+  <meta name="theme-color" content="#08080b">
+  <title>蔡登健 — Portfolio</title>
+  <style>
+    :root {
+      --color-primary: #f7f7f8;
+      --color-secondary: #d6d6da;
+      --color-muted: #a3a3aa;
+      --color-dim: #73737c;
+      --color-border: #292931;
+      --color-elevated: #17171d;
+      --color-bg: #08080b;
+      --color-accent: #e9e1ff;
+      --font-heading: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      --font-body: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      --font-mono: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+      --radius-sm: 9px;
+      --radius-md: 11px;
+      --radius-lg: 13px;
+      --shadow-high: 0 25px 55px -16px rgb(0 0 0 / .72);
+      --ease: cubic-bezier(.22, 1, .36, 1);
+      --page: min(1200px, calc(100vw - 48px));
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; overflow-x: clip; background: var(--color-bg); }
+    body {
+      margin: 0;
+      min-width: 320px;
+      color: var(--color-primary);
+      background:
+        radial-gradient(circle at 72% 8%, rgb(233 225 255 / .045), transparent 26rem),
+        var(--color-bg);
+      font: 400 16px/1.5 var(--font-body);
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+      isolation: isolate;
+    }
+
+    .liquid-ether {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      width: 100%;
+      height: 100%;
+      opacity: .34;
+      pointer-events: none;
+      filter: saturate(1.08) contrast(.96);
+      transform: translateZ(0);
+    }
+    main { position: relative; z-index: 1; }
+    #work, #about, #contact { content-visibility: auto; }
+    #work { contain-intrinsic-size: auto 720px; }
+    #about { contain-intrinsic-size: auto 1050px; }
+    #contact { contain-intrinsic-size: auto 680px; }
+
+    ::selection { color: #0a0a0a; background: var(--color-accent); }
+    a { color: inherit; text-decoration: none; }
+    button { color: inherit; font: inherit; }
+    img { display: block; max-width: 100%; }
+    [hidden] { display: none !important; }
+
+    .noise {
+      position: fixed;
+      inset: 0;
+      z-index: 50;
+      opacity: .025;
+      pointer-events: none;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.7'/%3E%3C/svg%3E");
+    }
+
+    .skip-link {
+      position: fixed;
+      left: 16px;
+      top: -80px;
+      z-index: 100;
+      padding: 10px 14px;
+      color: var(--color-bg);
+      background: var(--color-primary);
+      border-radius: var(--radius-sm);
+      transition: top 160ms ease;
+    }
+    .skip-link:focus { top: 16px; }
+
+    .shell { width: var(--page); margin-inline: auto; }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin: 0 0 18px;
+      color: var(--color-secondary);
+      font: 700 11px/1 var(--font-mono);
+      letter-spacing: .13em;
+      text-transform: uppercase;
+    }
+    .eyebrow::before { content: ""; width: 7px; height: 7px; background: #fff; border-radius: 50%; box-shadow: 0 0 18px rgb(233 225 255 / .8); }
+
+    .site-header {
+      position: fixed;
+      inset: 0 0 auto;
+      z-index: 40;
+      border-bottom: 1px solid transparent;
+      transition: background 240ms ease, border-color 240ms ease, backdrop-filter 240ms ease;
+    }
+    .site-header.scrolled {
+      background: rgb(10 10 10 / .78);
+      border-color: var(--color-border);
+      -webkit-backdrop-filter: blur(18px);
+      backdrop-filter: blur(18px);
+    }
+    .nav { height: 76px; display: flex; align-items: center; justify-content: space-between; }
+    .brand { display: inline-flex; align-items: center; gap: 12px; font-weight: 600; letter-spacing: -.02em; }
+    .brand-mark {
+      display: grid;
+      width: 31px;
+      height: 31px;
+      place-items: center;
+      border: 1px solid #343434;
+      border-radius: 50%;
+      font: 700 10px/1 var(--font-mono);
+      transition: transform 500ms var(--ease), background 250ms ease, color 250ms ease;
+    }
+    .brand:hover .brand-mark { color: #0a0a0a; background: #fff; transform: rotate(360deg); }
+    .nav-links { display: flex; align-items: center; gap: 6px; }
+    .nav-links a {
+      padding: 8px 12px;
+      color: rgb(255 255 255 / .66);
+      border-radius: var(--radius-sm);
+      font-size: 14px;
+      font-weight: 500;
+      transition: color 150ms ease, background 150ms ease;
+    }
+    .nav-links a:hover, .nav-links a:focus-visible { color: #fff; background: #181818; outline: none; }
+    .nav-cta {
+      margin-left: 8px;
+      color: #0a0a0a !important;
+      background: #fff !important;
+      box-shadow: 0 0 24px rgb(233 225 255 / .18);
+    }
+    .nav-cta:hover { transform: translateY(-1px); }
+
+    .hero {
+      min-height: 100svh;
+      display: grid;
+      grid-template-columns: minmax(290px, .82fr) minmax(520px, 1.18fr);
+      align-items: center;
+      gap: clamp(32px, 5vw, 80px);
+      padding: 118px 0 56px;
+    }
+    .hero-copy { position: relative; z-index: 4; }
+    .hero h1 {
+      max-width: 700px;
+      margin: 0;
+      font-size: clamp(46px, 5.3vw, 88px);
+      font-weight: 600;
+      line-height: .96;
+      letter-spacing: -.065em;
+    }
+    .hero h1 span { display: block; color: var(--color-dim); white-space: nowrap; }
+    .hero-intro { max-width: 510px; margin: 28px 0 0; color: var(--color-secondary); font-size: clamp(16px, 1.45vw, 19px); }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 34px; }
+    .button {
+      display: inline-flex;
+      min-height: 44px;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      padding: 0 17px;
+      color: var(--color-secondary);
+      background: rgb(24 24 24 / .5);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: color 180ms ease, background 180ms ease, border-color 180ms ease, transform 180ms ease;
+    }
+    .button:hover, .button:focus-visible { color: #fff; background: #1f1f1f; border-color: #3a3a3a; transform: translateY(-2px); outline: none; }
+    .button.primary { color: #0a0a0a; background: #fff; border-color: #fff; }
+    .button.primary:hover { background: var(--color-accent); border-color: var(--color-accent); }
+    .button svg { width: 16px; height: 16px; }
+    .availability { display: flex; align-items: center; gap: 10px; margin-top: 42px; color: var(--color-dim); font: 500 11px/1.4 var(--font-mono); letter-spacing: .05em; text-transform: uppercase; }
+    .availability i { width: 7px; height: 7px; background: #b8ffad; border-radius: 50%; box-shadow: 0 0 0 5px rgb(184 255 173 / .07); animation: pulse 2.4s ease infinite; }
+    @keyframes pulse { 50% { opacity: .45; transform: scale(.82); } }
+
+    .scene-wrap { position: relative; min-height: 620px; align-self: stretch; }
+    .scene-glow { position: absolute; inset: 18% 8% 8%; background: radial-gradient(circle, rgb(233 225 255 / .08), transparent 62%); filter: blur(36px); }
+    .scene {
+      position: absolute;
+      inset: 50% auto auto 50%;
+      width: min(720px, 64vw);
+      height: 570px;
+      perspective: 2500px;
+      transform: translate(-50%, -50%);
+      transform-style: preserve-3d;
+      isolation: isolate;
+    }
+    .scene::after { content: "MOVE / EXPLORE"; position: absolute; right: 5%; bottom: -5px; color: #5f5f5f; font: 600 9px/1 var(--font-mono); letter-spacing: .18em; }
+    .parallax-card {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 300px;
+      aspect-ratio: 1.38;
+      padding: 0;
+      overflow: hidden;
+      color: #fff;
+      background: #181818;
+      border: 0;
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-high);
+      cursor: pointer;
+      transform-style: preserve-3d;
+      will-change: transform, opacity, filter;
+      transition: transform 1.2s var(--ease), filter 1.2s var(--ease), opacity 1.2s var(--ease), box-shadow 280ms ease;
+    }
+    .parallax-card:focus-visible { outline: 2px solid #fff; outline-offset: 5px; }
+    .parallax-card::before { content: ""; position: absolute; inset: 0; z-index: 1; background: linear-gradient(to top, rgb(0 0 0 / .76), transparent 48%); }
+    .parallax-card img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(1) contrast(1.08); transition: filter 420ms ease, transform 900ms var(--ease); }
+    .parallax-card:hover img, .parallax-card:focus-visible img { filter: grayscale(.72) contrast(1.05); transform: scale(1.045); }
+    .card-meta { position: absolute; z-index: 2; inset: auto 16px 14px; display: flex; align-items: end; justify-content: space-between; gap: 12px; text-align: left; opacity: 0; transform: translateY(8px); transition: opacity 250ms ease, transform 250ms ease; }
+    .parallax-card:hover .card-meta, .parallax-card:focus-visible .card-meta { opacity: 1; transform: none; }
+    .card-meta strong { display: block; font-size: 14px; line-height: 1.2; }
+    .card-meta small { color: #c6c6c6; font: 500 9px/1.3 var(--font-mono); letter-spacing: .08em; text-transform: uppercase; }
+    .card-index { color: #fff; font: 600 10px/1 var(--font-mono); }
+
+    .scroll-cue { display: flex; justify-content: space-between; align-items: center; padding: 12px 0 26px; color: #676767; border-bottom: 1px solid var(--color-border); font: 600 10px/1 var(--font-mono); letter-spacing: .13em; text-transform: uppercase; }
+    .scroll-line { width: min(24vw, 240px); height: 1px; overflow: hidden; background: #202020; }
+    .scroll-line::after { content: ""; display: block; width: 38%; height: 1px; background: #aaa; animation: scan 2.5s var(--ease) infinite; }
+    @keyframes scan { from { transform: translateX(-110%); } to { transform: translateX(370%); } }
+
+    section { scroll-margin-top: 90px; }
+    .section { padding: clamp(92px, 12vw, 160px) 0; }
+    .section-head { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: end; margin-bottom: 48px; }
+    .section-head h2 { max-width: 760px; margin: 0; font-size: clamp(36px, 5vw, 68px); font-weight: 600; line-height: 1.02; letter-spacing: -.05em; }
+    .section-head p { max-width: 460px; justify-self: end; margin: 0; color: var(--color-muted); }
+
+    .project-list { border-top: 1px solid var(--color-border); }
+    .project-row {
+      position: relative;
+      display: grid;
+      grid-template-columns: 56px 1.15fr .75fr 36px;
+      gap: 24px;
+      align-items: center;
+      min-height: 112px;
+      border-bottom: 1px solid var(--color-border);
+      cursor: pointer;
+      transition: padding 350ms var(--ease), background 250ms ease;
+    }
+    .project-row::before { content: ""; position: absolute; inset: 0; z-index: -1; background: #111; transform: scaleY(0); transform-origin: bottom; transition: transform 350ms var(--ease); }
+    .project-row:hover::before, .project-row:focus-within::before { transform: scaleY(1); }
+    .project-row:hover { padding-inline: 18px; }
+    .project-row .no { color: var(--color-dim); font: 500 11px/1 var(--font-mono); }
+    .project-row h3 { margin: 0; font-size: clamp(21px, 2.6vw, 34px); font-weight: 500; letter-spacing: -.035em; }
+    .project-row p { margin: 0; color: var(--color-muted); font-size: 14px; }
+    .project-row .arrow { display: grid; width: 34px; height: 34px; place-items: center; border: 1px solid #2a2a2a; border-radius: 50%; transition: color 250ms ease, background 250ms ease, transform 350ms var(--ease); }
+    .project-row:hover .arrow { color: #0a0a0a; background: #fff; transform: rotate(45deg); }
+    .project-row button { position: absolute; inset: 0; width: 100%; border: 0; background: transparent; cursor: pointer; }
+
+    .about-grid { display: grid; grid-template-columns: .8fr 1.2fr; gap: clamp(50px, 9vw, 140px); align-items: start; }
+    .profile-card-wrap {
+      position: sticky;
+      top: 110px;
+      perspective: 1200px;
+    }
+    .profile-card {
+      --profile-rx: 0deg;
+      --profile-ry: 0deg;
+      --profile-mx: 50%;
+      --profile-my: 50%;
+      position: relative;
+      width: min(100%, 420px);
+      min-height: 560px;
+      color: #fff;
+      background: #050505;
+      border: 1px solid rgb(255 255 255 / .2);
+      border-radius: 28px;
+      box-shadow: 0 32px 70px -28px rgb(37 47 68 / .58);
+      transform: rotateX(var(--profile-rx)) rotateY(var(--profile-ry));
+      transform-style: preserve-3d;
+      transition: transform 180ms var(--ease), box-shadow 300ms ease;
+      isolation: isolate;
+      outline: none;
+      touch-action: pan-y;
+    }
+    .profile-card:focus-visible { box-shadow: 0 0 0 3px rgb(56 189 248 / .52), 0 32px 70px -28px rgb(37 47 68 / .58); }
+    .profile-behind-glow {
+      position: absolute;
+      z-index: -2;
+      inset: 7% -7% -5%;
+      border-radius: inherit;
+      background: radial-gradient(circle at var(--profile-mx) var(--profile-my), rgba(125, 190, 255, .67), rgb(192 132 252 / .34) 38%, transparent 70%);
+      filter: blur(38px);
+      opacity: .72;
+      transform: translateZ(-40px);
+      transition: opacity 300ms ease;
+    }
+    .profile-card:hover .profile-behind-glow { opacity: 1; }
+    .profile-media { position: absolute; inset: 0; overflow: hidden; border-radius: inherit; background: #0a0a0a; }
+    .profile-photo {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: 50% 43%;
+      filter: saturate(.76) contrast(1.08) brightness(.84);
+      transform: scale(1.025);
+      transition: filter 500ms ease, transform 700ms var(--ease);
+    }
+    .profile-card:hover .profile-photo { filter: saturate(.94) contrast(1.06) brightness(.91); transform: scale(1.055); }
+    .profile-tone {
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(145deg, #60496e8c 0%, #71C4FF44 46%, transparent 72%),
+        linear-gradient(180deg, rgb(3 5 10 / .04) 28%, rgb(3 5 10 / .18) 54%, rgb(3 5 10 / .94) 100%);
+      mix-blend-mode: screen, normal;
+    }
+    .profile-pattern {
+      position: absolute;
+      inset: 0;
+      opacity: .14;
+      background-image: radial-gradient(circle, #fff 1px, transparent 1.2px);
+      background-size: 18px 18px;
+      mask-image: linear-gradient(135deg, #000, transparent 56%);
+    }
+    .profile-glare {
+      position: absolute;
+      inset: 0;
+      opacity: .55;
+      background: radial-gradient(360px circle at var(--profile-mx) var(--profile-my), rgb(255 255 255 / .3), transparent 48%);
+      mix-blend-mode: soft-light;
+      pointer-events: none;
+    }
+    .profile-card-top, .profile-card-footer { position: absolute; z-index: 3; left: 22px; right: 22px; display: flex; align-items: center; justify-content: space-between; transform: translateZ(34px); }
+    .profile-card-top { top: 22px; }
+    .profile-card-footer { bottom: 22px; align-items: end; gap: 18px; }
+    .profile-status { display: inline-flex; align-items: center; gap: 8px; padding: 8px 10px; font: 600 9px/1 var(--font-mono); letter-spacing: .1em; text-transform: uppercase; background: rgb(8 10 16 / .54); border: 1px solid rgb(255 255 255 / .18); border-radius: 999px; backdrop-filter: blur(12px); }
+    .profile-status i { width: 6px; height: 6px; background: #66f29a; border-radius: 50%; box-shadow: 0 0 0 4px rgb(102 242 154 / .14); }
+    .profile-mark { color: rgb(255 255 255 / .72); font: 600 9px/1 var(--font-mono); letter-spacing: .16em; }
+    .profile-details small { display: block; margin-bottom: 6px; color: rgb(255 255 255 / .6); font: 500 9px/1 var(--font-mono); letter-spacing: .12em; text-transform: uppercase; }
+    .profile-details strong { display: block; font-size: 25px; line-height: 1; letter-spacing: -.035em; }
+    .profile-details span { display: block; margin-top: 7px; color: rgb(255 255 255 / .72); font-size: 12px; }
+    .profile-contact { flex: 0 0 auto; padding: 11px 13px; color: #071019; background: rgb(255 255 255 / .9); border: 1px solid rgb(255 255 255 / .72); border-radius: 12px; font: 700 10px/1 var(--font-mono); backdrop-filter: blur(12px); transition: transform 200ms ease, background 200ms ease; }
+    .profile-contact:hover, .profile-contact:focus-visible { color: #071019; background: #fff; transform: translateY(-2px); }
+    .about-copy h2 { margin: 0; font-size: clamp(38px, 5.2vw, 72px); font-weight: 600; line-height: 1; letter-spacing: -.055em; }
+    .about-copy .lead { margin: 34px 0 0; color: var(--color-secondary); font-size: clamp(19px, 2vw, 25px); line-height: 1.48; letter-spacing: -.018em; }
+    .about-copy > p:not(.lead) { margin: 24px 0 0; color: var(--color-muted); }
+    .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 54px; }
+    .stat { min-height: 126px; padding: 18px; background: #111; border: 1px solid var(--color-border); border-radius: var(--radius-md); }
+    .stat strong { display: block; font-size: 32px; font-weight: 500; letter-spacing: -.04em; }
+    .stat span { display: block; margin-top: 25px; color: var(--color-dim); font: 500 10px/1.4 var(--font-mono); text-transform: uppercase; }
+    .services { margin-top: 54px; border-top: 1px solid var(--color-border); }
+    .service { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 19px 0; border-bottom: 1px solid var(--color-border); }
+    .service span { color: var(--color-dim); font: 500 10px/1 var(--font-mono); }
+
+    .contact { padding-bottom: 56px; }
+    .contact-card {
+      position: relative;
+      min-height: 500px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      overflow: hidden;
+      padding: clamp(30px, 5vw, 68px);
+      background: #f4f4f4;
+      color: #0a0a0a;
+      border-radius: var(--radius-lg);
+    }
+    .contact-card::after { content: ""; position: absolute; width: 440px; height: 440px; right: -100px; bottom: -180px; border: 1px solid #bebebe; border-radius: 50%; box-shadow: 0 0 0 44px #e8e8e8, 0 0 0 45px #c8c8c8, 0 0 0 94px #ececec, 0 0 0 95px #d2d2d2; }
+    .contact-card .eyebrow { color: #444; }
+    .contact-card .eyebrow::before { background: #111; box-shadow: none; }
+    .contact-card h2 { position: relative; z-index: 1; max-width: 850px; margin: 0; font-size: clamp(46px, 8vw, 104px); font-weight: 600; line-height: .92; letter-spacing: -.07em; }
+    .contact-bottom { position: relative; z-index: 1; display: flex; align-items: end; justify-content: space-between; gap: 30px; }
+    .contact-bottom p { max-width: 430px; margin: 0; color: #484848; }
+    .contact-link { display: inline-flex; align-items: center; gap: 10px; padding: 13px 17px; color: #fff; background: #0a0a0a; border-radius: var(--radius-md); font-weight: 600; }
+    .contact-link:hover { background: #292929; }
+
+    footer { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 30px 0 10px; color: var(--color-dim); font: 500 10px/1.4 var(--font-mono); letter-spacing: .06em; text-transform: uppercase; }
+    .socials { display: flex; gap: 18px; }
+    .socials a:hover { color: #fff; }
+
+    /* BorderGlow — edge-sensitive purple / pink / blue light for interactive surfaces. */
+    @property --glow-x { syntax: "<length-percentage>"; inherits: true; initial-value: 50%; }
+    @property --glow-y { syntax: "<length-percentage>"; inherits: true; initial-value: 50%; }
+    .has-border-glow { --glow-x: 50%; --glow-y: 50%; --glow-alpha: 0; }
+    .border-glow-layer {
+      position: absolute;
+      z-index: 12;
+      inset: -1px;
+      padding: 1.5px;
+      border-radius: inherit;
+      pointer-events: none;
+      opacity: var(--glow-alpha);
+      background: radial-gradient(67px circle at var(--glow-x) var(--glow-y), #c084fc 0%, #f472b6 38%, #38bdf8 70%, transparent 100%);
+      filter: saturate(1.35) brightness(1.35) drop-shadow(0 0 7px rgb(56 189 248 / .5));
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      transition: opacity 160ms ease;
+      contain: paint;
+    }
+    @keyframes border-glow-mobile {
+      0%, 100% { --glow-x: 0%; --glow-y: 12%; }
+      25% { --glow-x: 100%; --glow-y: 8%; }
+      50% { --glow-x: 100%; --glow-y: 92%; }
+      75% { --glow-x: 0%; --glow-y: 88%; }
+    }
+
+    dialog {
+      width: min(880px, calc(100vw - 32px));
+      max-height: calc(100svh - 32px);
+      padding: 0;
+      overflow: auto;
+      color: #fff;
+      background: #111;
+      border: 1px solid #292929;
+      border-radius: var(--radius-lg);
+      box-shadow: 0 40px 100px rgb(0 0 0 / .7);
+    }
+    dialog.planning-open { width: min(1120px, calc(100vw - 32px)); }
+    dialog::backdrop { background: rgb(0 0 0 / .76); -webkit-backdrop-filter: blur(9px); backdrop-filter: blur(9px); }
+    .modal-art { position: relative; aspect-ratio: 16 / 8; overflow: hidden; }
+    .modal-art img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(1); }
+    .modal-close { position: absolute; z-index: 2; top: 14px; right: 14px; width: 38px; height: 38px; color: #fff; background: rgb(0 0 0 / .55); border: 1px solid rgb(255 255 255 / .16); border-radius: 50%; cursor: pointer; }
+    .modal-content { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; padding: 34px; }
+    .modal-content h3 { margin: 0; font-size: clamp(30px, 5vw, 52px); line-height: 1; letter-spacing: -.05em; }
+    .modal-content p { margin: 0; color: var(--color-muted); }
+    .modal-tags { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 24px; }
+    .modal-tags span { padding: 6px 9px; color: #bcbcbc; background: #181818; border: 1px solid #292929; border-radius: 999px; font: 500 10px/1 var(--font-mono); }
+    .planning-project { padding: clamp(26px, 4vw, 48px); }
+    .planning-head { max-width: 780px; padding: 10px 54px 40px 0; }
+    .planning-head h3 { margin: 0; font-size: clamp(42px, 7vw, 78px); font-weight: 600; line-height: .94; letter-spacing: -.065em; }
+    .planning-head > p:last-child { max-width: 680px; margin: 24px 0 0; color: var(--color-muted); font-size: 17px; }
+    .planning-cases { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+    .planning-case { overflow: hidden; background: #151515; border: 1px solid #292929; border-radius: var(--radius-lg); }
+    .case-visuals { position: relative; aspect-ratio: 16 / 9; overflow: hidden; background: #0b0b0b; }
+    .case-cover { width: 100%; height: 100%; object-fit: cover; }
+    .case-highlight { position: absolute; right: 14px; bottom: 14px; width: 40%; aspect-ratio: 16 / 9; object-fit: cover; border: 1px solid rgb(255 255 255 / .2); border-radius: 6px; box-shadow: 0 16px 36px rgb(0 0 0 / .5); }
+    .case-copy { padding: 24px; }
+    .case-label { display: flex; align-items: center; justify-content: space-between; gap: 20px; color: var(--color-dim); font: 600 9px/1 var(--font-mono); letter-spacing: .12em; text-transform: uppercase; }
+    .case-copy h4 { margin: 16px 0 0; font-size: clamp(24px, 3vw, 34px); font-weight: 500; line-height: 1.08; letter-spacing: -.035em; }
+    .case-copy > p { margin: 15px 0 0; color: var(--color-muted); font-size: 14px; }
+    .case-points { display: grid; gap: 9px; margin: 22px 0 0; padding: 18px 0 0; border-top: 1px solid #292929; list-style: none; }
+    .case-points li { display: grid; grid-template-columns: 18px 1fr; gap: 9px; color: var(--color-secondary); font-size: 13px; }
+    .case-points li span { color: var(--color-dim); font: 500 9px/1.7 var(--font-mono); }
+    .planning-role { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 20px; }
+    .planning-role span { padding: 6px 9px; color: #bcbcbc; background: #101010; border: 1px solid #292929; border-radius: 999px; font: 500 9px/1 var(--font-mono); }
+    .deck-open {
+      width: 100%;
+      min-height: 42px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-top: 22px;
+      padding: 0 13px;
+      color: #0a0a0a;
+      background: #fff;
+      border: 1px solid #fff;
+      border-radius: var(--radius-sm);
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 180ms ease, border-color 180ms ease, transform 180ms ease;
+    }
+    .deck-open:hover, .deck-open:focus-visible { background: var(--color-accent); border-color: var(--color-accent); transform: translateY(-1px); outline: none; }
+    .deck-viewer { min-height: 760px; background: #0b0b0b; }
+    .deck-toolbar {
+      position: sticky;
+      top: 0;
+      z-index: 4;
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      gap: 20px;
+      min-height: 72px;
+      padding: 14px 48px 14px 20px;
+      background: rgb(11 11 11 / .9);
+      border-bottom: 1px solid #292929;
+      -webkit-backdrop-filter: blur(16px);
+      backdrop-filter: blur(16px);
+    }
+    .deck-back { justify-self: start; display: inline-flex; align-items: center; gap: 8px; padding: 8px 10px; color: var(--color-secondary); background: transparent; border: 1px solid #292929; border-radius: var(--radius-sm); font-size: 12px; cursor: pointer; }
+    .deck-back:hover { color: #fff; background: #181818; }
+    .deck-toolbar-title { min-width: 0; text-align: center; }
+    .deck-toolbar-title strong { display: block; overflow: hidden; font-size: 15px; text-overflow: ellipsis; white-space: nowrap; }
+    .deck-toolbar-title span { display: block; margin-top: 3px; color: var(--color-dim); font: 500 9px/1 var(--font-mono); letter-spacing: .1em; text-transform: uppercase; }
+    .deck-counter { justify-self: end; color: var(--color-secondary); font: 600 11px/1 var(--font-mono); letter-spacing: .06em; }
+    .deck-stage { padding: clamp(20px, 4vw, 42px); }
+    .deck-slide-wrap { position: relative; max-width: 980px; margin: 0 auto; }
+    .deck-slide { width: 100%; aspect-ratio: 16 / 9; object-fit: contain; background: #111; border: 1px solid #292929; border-radius: 5px; box-shadow: 0 28px 70px rgb(0 0 0 / .48); }
+    .deck-nav { display: flex; align-items: center; justify-content: center; gap: 10px; margin-top: 20px; }
+    .deck-nav button { min-width: 106px; height: 38px; color: var(--color-secondary); background: #151515; border: 1px solid #292929; border-radius: var(--radius-sm); font-size: 12px; cursor: pointer; }
+    .deck-nav button:hover:not(:disabled) { color: #fff; background: #1d1d1d; }
+    .deck-nav button:disabled { opacity: .32; cursor: default; }
+    .deck-thumbs { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 10px; max-width: 980px; margin: 34px auto 0; }
+    .deck-thumb { position: relative; padding: 0; overflow: hidden; background: #111; border: 1px solid #292929; border-radius: 5px; cursor: pointer; transition: border-color 180ms ease, transform 180ms ease, opacity 180ms ease; opacity: .58; }
+    .deck-thumb:hover, .deck-thumb:focus-visible { opacity: .9; transform: translateY(-2px); outline: none; }
+    .deck-thumb.active { border-color: #fff; opacity: 1; }
+    .deck-thumb img { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; }
+    .deck-thumb span { position: absolute; left: 6px; bottom: 5px; display: grid; width: 20px; height: 20px; place-items: center; color: #fff; background: rgb(0 0 0 / .72); border-radius: 50%; font: 600 8px/1 var(--font-mono); }
+    .web-viewer { min-height: 760px; background: #0b0b0b; }
+    .web-toolbar {
+      position: sticky;
+      top: 0;
+      z-index: 4;
+      display: grid;
+      grid-template-columns: 1fr minmax(0, 1.6fr) 1fr;
+      align-items: center;
+      gap: 20px;
+      min-height: 72px;
+      padding: 14px 48px 14px 20px;
+      background: rgb(11 11 11 / .9);
+      border-bottom: 1px solid #292929;
+      -webkit-backdrop-filter: blur(16px);
+      backdrop-filter: blur(16px);
+    }
+    .web-toolbar-title { min-width: 0; text-align: center; }
+    .web-toolbar-title strong { display: block; overflow: hidden; font-size: 15px; text-overflow: ellipsis; white-space: nowrap; }
+    .web-toolbar-title span { display: block; margin-top: 3px; color: var(--color-dim); font: 500 9px/1 var(--font-mono); letter-spacing: .1em; text-transform: uppercase; }
+    .web-open-new { justify-self: end; color: var(--color-secondary); font: 600 10px/1 var(--font-mono); letter-spacing: .05em; }
+    .web-open-new:hover { color: #fff; }
+    .web-stage { padding: clamp(14px, 2.4vw, 28px); }
+    .web-frame-shell { height: min(820px, calc(100svh - 156px)); min-height: 560px; overflow: hidden; background: #fff; border: 1px solid #292929; border-radius: 7px; box-shadow: 0 28px 70px rgb(0 0 0 / .48); }
+    .web-frame { display: block; width: 100%; height: 100%; border: 0; background: #fff; }
+    @property --community-reveal { syntax: "<percentage>"; inherits: true; initial-value: 0%; }
+    .community-viewer { padding: clamp(26px, 4vw, 48px); background: #0b0b0b; }
+    .community-head { max-width: 920px; padding: 10px 54px 38px 0; }
+    .community-head h3 { max-width: 900px; margin: 0; font-size: clamp(42px, 7vw, 78px); font-weight: 600; line-height: .94; letter-spacing: -.065em; }
+    .community-head > p:last-child { max-width: 760px; margin: 24px 0 0; color: var(--color-muted); font-size: 17px; }
+    .community-compare {
+      --community-reveal: 0%;
+      position: relative;
+      aspect-ratio: 16 / 9;
+      overflow: hidden;
+      background: #111;
+      border: 1px solid #292929;
+      border-radius: var(--radius-lg);
+      box-shadow: 0 28px 70px rgb(0 0 0 / .48);
+      animation: community-sweep 2.8s var(--ease) .28s forwards;
+    }
+    .community-compare.manual { animation: none; }
+    .community-compare img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+    .community-after { clip-path: inset(0 calc(100% - var(--community-reveal)) 0 0); }
+    .community-divider { position: absolute; z-index: 2; top: 0; bottom: 0; left: var(--community-reveal); width: 1px; background: #fff; box-shadow: 0 0 0 1px rgb(0 0 0 / .3), 0 0 24px rgb(255 255 255 / .55); transform: translateX(-1px); }
+    .community-divider::after { content: "↔"; position: absolute; top: 50%; left: 50%; display: grid; width: 44px; height: 44px; place-items: center; color: #0a0a0a; background: #fff; border-radius: 50%; font-size: 17px; transform: translate(-50%, -50%); }
+    .community-state { position: absolute; z-index: 3; top: 16px; padding: 7px 10px; color: #0a0a0a; background: #fff; border-radius: 999px; font: 700 9px/1 var(--font-mono); letter-spacing: .08em; text-transform: uppercase; }
+    .community-state.before { left: 16px; }
+    .community-state.after { right: 16px; color: #111; background: #ffd336; }
+    .community-change-control { display: grid; grid-template-columns: auto minmax(140px, 1fr) auto; align-items: center; gap: 14px; margin: 16px 0 40px; color: var(--color-dim); font: 600 9px/1 var(--font-mono); letter-spacing: .09em; text-transform: uppercase; }
+    .community-change-control input { width: 100%; height: 2px; accent-color: #ffd336; cursor: ew-resize; }
+    .community-flow { display: grid; grid-template-columns: repeat(7, 1fr); margin-bottom: 36px; border: 1px solid #292929; border-radius: var(--radius-sm); }
+    .community-flow span { min-width: 0; padding: 12px 8px; color: var(--color-dim); border-right: 1px solid #292929; font: 600 8px/1.35 var(--font-mono); text-align: center; letter-spacing: .05em; text-transform: uppercase; }
+    .community-flow span:last-child { border-right: 0; }
+    .community-pages { display: grid; gap: clamp(28px, 5vw, 62px); }
+    .community-page { opacity: 0; transform: perspective(1100px) translateY(44px) rotateX(2.5deg) scale(.965); transform-origin: 50% 0; transition: opacity 700ms var(--ease), transform 900ms var(--ease); }
+    .community-page.visible { opacity: 1; transform: none; }
+    .community-page figcaption { display: flex; align-items: center; justify-content: space-between; gap: 18px; margin-bottom: 10px; color: var(--color-dim); font: 600 9px/1 var(--font-mono); letter-spacing: .09em; text-transform: uppercase; }
+    .community-page img { width: 100%; aspect-ratio: 16 / 9; object-fit: contain; background: #111; border: 1px solid #292929; border-radius: 6px; box-shadow: 0 24px 60px rgb(0 0 0 / .36); }
+    .community-end { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 26px 0 4px; color: var(--color-secondary); border-top: 1px solid #292929; }
+    .community-end strong { font-size: clamp(22px, 3vw, 34px); font-weight: 500; letter-spacing: -.04em; }
+    .community-end span { color: var(--color-dim); font: 600 9px/1 var(--font-mono); letter-spacing: .08em; text-transform: uppercase; }
+    .star-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; margin-top: 20px; }
+    .star-item { min-height: 98px; padding: 13px; background: #101010; border: 1px solid #292929; border-radius: var(--radius-sm); }
+    .star-item strong { display: block; color: #fff; font: 700 9px/1 var(--font-mono); letter-spacing: .1em; text-transform: uppercase; }
+    .star-item p { margin: 9px 0 0; color: var(--color-muted); font-size: 12px; line-height: 1.5; }
+    .ecommerce-case .case-visuals::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 54%, rgb(0 0 0 / .36)); pointer-events: none; }
+    .ecommerce-case .case-cover { transition: transform 850ms var(--ease), filter 500ms ease; }
+    .ecommerce-case:hover .case-cover { transform: scale(1.035); filter: saturate(1.08); }
+    .poster-viewer { min-height: 760px; background: #0b0b0b; }
+    .poster-stage { display: grid; place-items: center; padding: clamp(20px, 4vw, 42px); }
+    .poster-image { width: auto; max-width: 100%; max-height: calc(100svh - 150px); object-fit: contain; background: #111; border: 1px solid #292929; border-radius: 6px; box-shadow: 0 28px 70px rgb(0 0 0 / .48); }
+    .workflow { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 22px; }
+    .workflow-step { position: relative; min-height: 96px; padding: 14px; background: #101010; border: 1px solid #292929; border-radius: var(--radius-sm); }
+    .workflow-step:not(:last-child)::after { content: "→"; position: absolute; z-index: 2; top: 50%; right: -10px; color: #fff; font-size: 14px; transform: translate(50%, -50%); }
+    .workflow-step span { color: var(--color-dim); font: 700 8px/1 var(--font-mono); letter-spacing: .1em; text-transform: uppercase; }
+    .workflow-step strong { display: block; margin-top: 10px; color: var(--color-secondary); font-size: 12px; font-weight: 600; line-height: 1.4; }
+    .creative-viewer { padding: clamp(26px, 4vw, 48px); background: #0b0b0b; }
+    .creative-head { max-width: 900px; padding: 10px 54px 46px 0; }
+    .creative-head h3 { margin: 0; font-size: clamp(42px, 7vw, 78px); font-weight: 600; line-height: .94; letter-spacing: -.065em; }
+    .creative-head > p:last-child { max-width: 760px; margin: 24px 0 0; color: var(--color-muted); font-size: 17px; }
+    .creative-section { padding: clamp(28px, 5vw, 58px) 0; border-top: 1px solid #292929; }
+    .creative-section-head { display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); gap: clamp(28px, 5vw, 72px); margin-bottom: 30px; }
+    .creative-section-index { color: var(--color-dim); font: 700 9px/1 var(--font-mono); letter-spacing: .11em; text-transform: uppercase; }
+    .creative-section h4 { margin: 12px 0 0; font-size: clamp(30px, 5vw, 54px); font-weight: 500; line-height: 1; letter-spacing: -.05em; }
+    .creative-section-copy > p { margin: 0; color: var(--color-muted); font-size: 15px; }
+    .creative-pages { display: grid; gap: clamp(22px, 4vw, 44px); }
+    .creative-page { opacity: 0; transform: translateY(34px) scale(.978); transition: opacity 650ms var(--ease), transform 850ms var(--ease); }
+    .creative-page.visible { opacity: 1; transform: none; }
+    .creative-page figcaption { display: flex; justify-content: space-between; gap: 14px; margin-bottom: 9px; color: var(--color-dim); font: 600 9px/1 var(--font-mono); letter-spacing: .08em; text-transform: uppercase; }
+    .creative-page img { width: 100%; aspect-ratio: 16 / 9; object-fit: contain; background: #111; border: 1px solid #292929; border-radius: 6px; box-shadow: 0 24px 60px rgb(0 0 0 / .36); }
+
+    /* Dark portfolio theme — restrained black surfaces with scarce lavender accents. */
+    body { background: radial-gradient(circle at 72% 8%, rgb(82 39 255 / .12), transparent 30rem), #08080b; }
+    .liquid-ether { opacity: .29; mix-blend-mode: screen; }
+    .noise { opacity: .035; mix-blend-mode: screen; }
+    .site-header.scrolled { background: rgb(8 8 11 / .78); border-color: rgb(255 255 255 / .08); }
+    .brand-mark { border-color: #383842; }
+    .brand:hover .brand-mark { color: #09090c; background: #f7f7f8; }
+    .nav-links a { color: rgb(247 247 248 / .68); }
+    .nav-links a:hover, .nav-links a:focus-visible { color: #fff; background: rgb(255 255 255 / .07); }
+    .nav-cta { color: #0a0a0d !important; background: #f7f7f8 !important; box-shadow: 0 12px 32px rgb(0 0 0 / .4); }
+    .nav-cta:hover { background: var(--color-accent) !important; }
+    .button { color: #d8d8dd; background: rgb(18 18 24 / .82); border-color: #34343e; }
+    .button:hover, .button:focus-visible { color: #fff; background: #202028; border-color: #555565; }
+    .button.primary { color: #0a0a0d; background: #f7f7f8; border-color: #f7f7f8; }
+    .button.primary:hover { color: #0a0a0d; background: var(--color-accent); border-color: #e9e1ff; }
+    .scene-glow { background: radial-gradient(circle, rgb(125 89 255 / .22), transparent 64%); }
+    .parallax-card { border-color: rgb(255 255 255 / .16); box-shadow: 0 28px 70px -18px rgb(0 0 0 / .78); }
+    .project-row::before { background: linear-gradient(90deg, rgb(82 39 255 / .12), rgb(255 159 252 / .05)); }
+    .project-row .arrow { border-color: #34343e; }
+    .stat { background: rgb(18 18 24 / .74); border-color: #30303a; }
+    dialog { color: #f7f7f8; background: #0d0d12; border-color: #2c2c34; box-shadow: 0 44px 120px rgb(0 0 0 / .72); }
+    dialog::backdrop { background: rgb(0 0 0 / .76); backdrop-filter: blur(7px); }
+    .modal-close { color: #fff; background: rgb(18 18 24 / .88); border-color: rgb(255 255 255 / .16); box-shadow: 0 8px 24px rgb(0 0 0 / .35); }
+    .contact-card { color: #f7f7f8; background: linear-gradient(145deg, #121218, #0b0b0f 66%); border: 1px solid #292931; }
+    .contact-card::after { border-color: #353541; box-shadow: 0 0 0 44px #111118, 0 0 0 45px #2e2e38, 0 0 0 94px #0e0e14, 0 0 0 95px #292933; }
+    .contact-card .eyebrow { color: #a3a3aa; }
+    .contact-card .eyebrow::before { background: #fff; }
+    .contact-bottom p { color: #a3a3aa; }
+    .contact-link { color: #09090c; background: #f7f7f8; }
+    .contact-link:hover { color: #09090c; background: var(--color-accent); }
+    .hero { min-height: 92svh; grid-template-columns: minmax(290px, .9fr) minmax(460px, 1.1fr); }
+    .hero h1 { max-width: 610px; font-size: clamp(42px, 4.7vw, 72px); }
+    .hero-intro { max-width: 470px; font-size: clamp(15px, 1.25vw, 17px); }
+    .scene-wrap { min-height: 540px; }
+    .scene { width: min(650px, 60vw); height: 510px; }
+    .parallax-card { width: 258px; }
+    .section { padding: clamp(80px, 10vw, 132px) 0; }
+    .section-head h2 { max-width: 650px; font-size: clamp(32px, 4.4vw, 56px); }
+    .project-row { min-height: 98px; }
+    .project-row h3 { font-size: clamp(20px, 2.25vw, 30px); }
+    .planning-head h3, .community-head h3, .creative-head h3 { font-size: clamp(38px, 6vw, 64px); }
+    .case-copy h4 { font-size: clamp(22px, 2.5vw, 30px); }
+
+    @keyframes community-sweep {
+      0% { --community-reveal: 0%; }
+      18% { --community-reveal: 0%; }
+      100% { --community-reveal: 100%; }
+    }
+
+    .reveal { opacity: 0; transform: translateY(26px); transition: opacity 800ms var(--ease), transform 800ms var(--ease); }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    @media (max-width: 980px) {
+      :root { --page: min(100% - 32px, 780px); }
+      .hero { grid-template-columns: 1fr; padding-top: 150px; }
+      .hero-copy { max-width: 760px; }
+      .scene-wrap { min-height: 610px; }
+      .scene { width: min(640px, 92vw); }
+      .section-head, .about-grid { grid-template-columns: 1fr; }
+      .section-head p { justify-self: start; }
+      .profile-card-wrap { position: relative; top: 0; width: min(100%, 540px); }
+      .profile-card { min-height: 620px; }
+      .about-copy { max-width: 730px; }
+    }
+
+    @media (max-width: 680px) {
+      :root { --page: calc(100% - 28px); }
+      .nav { height: 66px; }
+      .nav-links a:not(.nav-cta) { display: none; }
+      .nav-cta { padding-inline: 12px !important; }
+      .hero { min-height: auto; gap: 16px; padding-top: 118px; }
+      .hero h1 { font-size: clamp(40px, 13vw, 56px); }
+      .hero-intro { margin-top: 22px; }
+      .availability { margin-top: 28px; }
+      .scene-wrap { min-height: 470px; margin-top: 4px; }
+      .scene { width: 580px; height: 440px; transform: translate(-50%, -50%) scale(.64); }
+      .scene::after { display: none; }
+      .section { padding: 90px 0; }
+      .section-head { gap: 22px; margin-bottom: 32px; }
+      .project-row { grid-template-columns: 36px 1fr 34px; min-height: 96px; gap: 10px; }
+      .project-row p { display: none; }
+      .stats { grid-template-columns: 1fr; }
+      .stat { min-height: 105px; }
+      .profile-card { min-height: min(610px, 145vw); }
+      .profile-card-footer { left: 16px; right: 16px; bottom: 16px; }
+      .profile-details strong { font-size: 22px; }
+      .profile-details span { max-width: 150px; line-height: 1.35; }
+      .contact-card { min-height: 530px; }
+      .contact-bottom { align-items: start; flex-direction: column; }
+      .contact-card::after { right: -220px; bottom: -130px; }
+      footer { align-items: flex-start; flex-direction: column; }
+      .modal-content { grid-template-columns: 1fr; gap: 20px; padding: 24px; }
+      .planning-project { padding: 22px; }
+      .planning-head { padding: 12px 44px 30px 0; }
+      .planning-cases { grid-template-columns: 1fr; }
+      .case-copy { padding: 20px; }
+      .deck-toolbar { grid-template-columns: auto minmax(0, 1fr) auto; gap: 8px; min-height: 64px; padding: 10px 44px 10px 10px; }
+      .deck-back { width: 38px; justify-content: center; padding-inline: 0; }
+      .deck-back span { display: none; }
+      .deck-toolbar-title strong { font-size: 12px; }
+      .deck-toolbar-title span { font-size: 8px; }
+      .deck-counter { font-size: 9px; }
+      .deck-stage { padding: 14px 10px 24px; }
+      .deck-nav { margin-top: 14px; }
+      .deck-nav button { min-width: 92px; }
+      .deck-thumbs { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; margin-top: 24px; }
+      .web-toolbar { grid-template-columns: auto minmax(0, 1fr) auto; gap: 8px; min-height: 64px; padding: 10px 44px 10px 10px; }
+      .web-toolbar-title strong { font-size: 12px; }
+      .web-open-new { font-size: 0; }
+      .web-open-new::after { content: "↗"; font-size: 16px; }
+      .web-stage { padding: 10px; }
+      .web-frame-shell { height: calc(100svh - 118px); min-height: 480px; }
+      .community-viewer { padding: 22px 10px; }
+      .community-head { padding: 12px 44px 28px 12px; }
+      .community-head > p:last-child { font-size: 14px; }
+      .community-state { top: 8px; padding: 5px 7px; font-size: 7px; }
+      .community-state.before { left: 8px; }
+      .community-state.after { right: 8px; }
+      .community-divider::after { width: 34px; height: 34px; }
+      .community-change-control { margin: 12px 2px 28px; }
+      .community-flow { grid-template-columns: repeat(4, 1fr); }
+      .community-flow span:nth-child(4) { border-right: 0; }
+      .community-flow span:nth-child(-n+4) { border-bottom: 1px solid #292929; }
+      .community-flow span:last-child { grid-column: span 2; }
+      .community-page { transform: translateY(26px) scale(.98); }
+      .star-grid { grid-template-columns: 1fr; }
+      .star-item { min-height: 0; }
+      .workflow { grid-template-columns: 1fr; }
+      .workflow-step { min-height: 0; }
+      .workflow-step:not(:last-child)::after { top: auto; right: 50%; bottom: -8px; transform: translate(50%, 50%) rotate(90deg); }
+      .poster-stage { padding: 14px 10px 24px; }
+      .creative-viewer { padding: 22px 10px; }
+      .creative-head { padding: 12px 44px 32px 12px; }
+      .creative-head > p:last-child { font-size: 14px; }
+      .creative-section-head { grid-template-columns: 1fr; gap: 20px; padding-inline: 2px; }
+      .creative-page { transform: translateY(24px) scale(.985); }
+      .liquid-ether { opacity: .26; filter: saturate(1.02); }
+    }
+
+    @media (pointer: coarse) {
+      .scene::after { display: none; }
+      .card-meta { opacity: 1; transform: none; }
+      .has-border-glow { --glow-alpha: .3; }
+      .border-glow-layer {
+        animation: none;
+        background: linear-gradient(120deg, #c084fc, #f472b6 48%, #38bdf8);
+        filter: none;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+      .reveal { opacity: 1; transform: none; }
+      .community-compare { --community-reveal: 100%; animation: none; }
+      .community-page { opacity: 1; transform: none; }
+      .creative-page { opacity: 1; transform: none; }
+      .profile-card { transform: none; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">跳到主内容</a>
+  <canvas class="liquid-ether" id="liquidEther" aria-hidden="true"></canvas>
+  <div class="noise" aria-hidden="true"></div>
+
+  <header class="site-header" id="siteHeader">
+    <nav class="nav shell" aria-label="主导航">
+      <a class="brand" href="#top" aria-label="返回首页">
+        <span class="brand-mark">CD</span>
+        <span data-bind="name">CAI DJ</span>
+      </a>
+      <div class="nav-links">
+        <a href="#work">作品</a>
+        <a href="#about">关于</a>
+        <a href="#contact">联系</a>
+        <a class="nav-cta" href="#contact">开始合作</a>
+      </div>
+    </nav>
+  </header>
+
+  <main id="main">
+    <section class="hero shell" id="top">
+      <div class="hero-copy">
+        <p class="eyebrow">Portfolio / Selected works / 2026</p>
+        <h1>作品与思考，<span>构成我的方法。</span></h1>
+        <p class="hero-intro">我是 <span data-bind="name">CAI DJ</span>。这是一份覆盖品牌策略、视觉设计、社区共创、电商传播、AI 插画与 3D 建模的个人 Portfolio。</p>
+        <div class="hero-actions">
+          <a class="button primary" href="#work">
+            查看精选作品
+            <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+          <a class="button" data-email-link href="mailto:hello@yourdomain.com">发送邮件</a>
+        </div>
+        <div class="availability"><i aria-hidden="true"></i><span>当前可接受 2026 年新项目</span></div>
+      </div>
+      <div class="scene-wrap" aria-label="可交互的精选项目场景">
+        <div class="scene-glow" aria-hidden="true"></div>
+        <div class="scene" id="scene"></div>
+      </div>
+    </section>
+
+    <div class="scroll-cue shell" aria-hidden="true"><span>Selected projects / 2023—2026</span><span class="scroll-line"></span><span>Scroll to discover</span></div>
+
+    <section class="section shell" id="work">
+      <div class="section-head reveal">
+        <div>
+          <p class="eyebrow">01 / Featured work</p>
+          <h2>不只是好看，<br>更要解决问题。</h2>
+        </div>
+        <p>从策略、界面到代码，我关注每一个交互细节，也关注产品最终为人创造了什么价值。</p>
+      </div>
+      <div class="project-list reveal" id="projectList"></div>
+    </section>
+
+    <section class="section shell" id="about">
+      <div class="about-grid">
+        <div class="profile-card-wrap reveal">
+          <article class="profile-card" id="profileCard" tabindex="0" aria-label="蔡登健交互式个人资料卡">
+            <div class="profile-behind-glow" aria-hidden="true"></div>
+            <div class="profile-media">
+              <img class="profile-photo" src="assets/previews/profile/cai-dengjian.webp" alt="蔡登健个人照片" loading="lazy" decoding="async">
+              <div class="profile-tone" aria-hidden="true"></div>
+              <div class="profile-pattern" aria-hidden="true"></div>
+              <div class="profile-glare" aria-hidden="true"></div>
+            </div>
+            <div class="profile-card-top">
+              <span class="profile-status"><i aria-hidden="true"></i>Online</span>
+              <span class="profile-mark">CAI / AI · 2026</span>
+            </div>
+            <div class="profile-card-footer">
+              <div class="profile-details">
+                <small>@cai.design</small>
+                <strong>蔡登健</strong>
+                <span>AI 方向的设计与策划</span>
+              </div>
+              <a class="profile-contact" data-email-link href="mailto:3193457458@qq.com">联系我 ↗</a>
+            </div>
+          </article>
+        </div>
+        <div class="about-copy reveal">
+          <p class="eyebrow">02 / About me</p>
+          <h2>AI、设计与策略，<br>构成我的工作方法。</h2>
+          <p class="lead">我是蔡登健，一名专注 AI 方向的设计与策划工作者。我把洞察、叙事和视觉系统连接起来，让想法成为清晰、完整、可执行的方案。</p>
+          <p>从品牌策划、视觉设计到社区与传播项目，我会根据问题选择合适的 AI 工作流，并保留对内容、审美和落地质量的判断。</p>
+          <div class="stats">
+            <div class="stat"><strong>05</strong><span>Portfolio directions</span></div>
+            <div class="stat"><strong>AI+</strong><span>Creative workflow</span></div>
+            <div class="stat"><strong>360°</strong><span>Strategy to delivery</span></div>
+          </div>
+          <div class="services" aria-label="服务范围">
+            <div class="service"><strong>品牌与营销策划</strong><span>01</span></div>
+            <div class="service"><strong>品牌视觉与设计系统</strong><span>02</span></div>
+            <div class="service"><strong>AI 插画与内容工作流</strong><span>03</span></div>
+            <div class="service"><strong>3D 建模与创意表达</strong><span>04</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="contact shell" id="contact">
+      <div class="contact-card reveal">
+        <div>
+          <p class="eyebrow">03 / Start a project</p>
+          <h2>有个好想法？<br>一起把它做出来。</h2>
+        </div>
+        <div class="contact-bottom">
+          <p>欢迎联系我聊聊新产品、品牌网站、交互实验，或任何值得认真解决的问题。</p>
+          <a class="contact-link" data-email-link href="mailto:3193457458@qq.com"><span data-bind="email">3193457458@qq.com</span> ↗</a>
+        </div>
+      </div>
+      <footer>
+        <span>© <span id="year"></span> <span data-bind="name">蔡登健</span>. All rights reserved.</span>
+        <div class="socials"><a href="#" aria-label="Behance">作品集</a><a href="#" aria-label="GitHub">GitHub</a><a href="#" aria-label="LinkedIn">领英</a></div>
+      </footer>
+    </section>
+  </main>
+
+  <dialog id="projectDialog" aria-labelledby="dialogTitle">
+    <button class="modal-close" type="button" aria-label="关闭项目详情" id="dialogClose">×</button>
+    <div id="standardProject">
+      <div class="modal-art">
+      <img id="dialogImage" alt="">
+      </div>
+      <div class="modal-content">
+        <div>
+          <p class="eyebrow" id="dialogCategory">Selected project</p>
+          <h3 id="dialogTitle"></h3>
+          <div class="modal-tags" id="dialogTags"></div>
+        </div>
+        <p id="dialogDescription"></p>
+      </div>
+    </div>
+    <div class="planning-project" id="planningProject" hidden>
+      <div class="planning-head">
+        <p class="eyebrow" id="planningEyebrow">Planning / Selected cases</p>
+        <h3 id="planningTitle">策划</h3>
+        <p id="planningDescription">从品牌命题、用户洞察到传播与落地路径，用完整策略把商业目标转化为可执行的体验。</p>
+      </div>
+      <div class="planning-cases" id="planningCases"></div>
+    </div>
+    <div class="deck-viewer" id="deckViewer" hidden>
+      <div class="deck-toolbar">
+        <button class="deck-back" type="button" id="deckBack">← <span>返回策划</span></button>
+        <div class="deck-toolbar-title"><strong id="deckTitle"></strong><span>Full presentation</span></div>
+        <span class="deck-counter" id="deckCounter">01 / 10</span>
+      </div>
+      <div class="deck-stage">
+        <div class="deck-slide-wrap"><img class="deck-slide" id="deckSlide" alt=""></div>
+        <div class="deck-nav">
+          <button type="button" id="deckPrev">← 上一页</button>
+          <button type="button" id="deckNext">下一页 →</button>
+        </div>
+        <div class="deck-thumbs" id="deckThumbs" aria-label="PPT 页面缩略图"></div>
+      </div>
+    </div>
+    <div class="web-viewer" id="webViewer" hidden>
+      <div class="web-toolbar">
+        <button class="deck-back" type="button" id="webBack">← <span>返回品牌视觉</span></button>
+        <div class="web-toolbar-title"><strong id="webTitle"></strong><span id="webSubtitle">Complete brand visual</span></div>
+        <a class="web-open-new" id="webOpenNew" href="#" target="_blank" rel="noopener">新窗口查看 ↗</a>
+      </div>
+      <div class="web-stage">
+        <div class="web-frame-shell"><iframe class="web-frame" id="webFrame" title="完整品牌视觉方案" loading="eager"></iframe></div>
+      </div>
+    </div>
+    <div class="community-viewer" id="communityViewer" hidden>
+      <div class="community-head">
+        <p class="eyebrow">Community regeneration / Full project</p>
+        <h3>马家堡·有样</h3>
+        <p>从现场调研、社区共创品牌到公共画展与空间激活，用居民的真实表达完成一次可参与、可被看见的社区更新。</p>
+      </div>
+      <div class="community-compare" id="communityCompare" aria-label="马家堡改造前后变化对比">
+        <img src="assets/previews/community/majiaobao/slide-2.webp" alt="马家堡社区改造前的现场调研" decoding="async">
+        <img class="community-after" src="assets/previews/community/majiaobao/slide-7.webp" alt="马家堡社区空间激活后的共创墙面" decoding="async">
+        <span class="community-state before">Before / 现场</span>
+        <span class="community-state after">After / 激活</span>
+        <span class="community-divider" aria-hidden="true"></span>
+      </div>
+      <label class="community-change-control"><span>现场调研</span><input id="communityRange" type="range" min="0" max="100" value="100" aria-label="拖动查看马家堡改造前后变化"><span>空间激活</span></label>
+      <div class="community-flow" aria-label="项目完整流程">
+        <span>01 项目命题</span><span>02 现场调研</span><span>03 视觉系统</span><span>04 策划流程</span><span>05 物料制作</span><span>06 公共画展</span><span>07 空间激活</span>
+      </div>
+      <div class="community-pages" id="communityPages"></div>
+      <div class="community-end"><strong>每个人，都是社区的一笔。</strong><span>Majiaobao · Complete project</span></div>
+    </div>
+    <div class="creative-viewer" id="creativeViewer" hidden>
+      <div class="creative-head">
+        <p class="eyebrow">Illustration & 3D / Complete PDF works</p>
+        <h3>插画与 3D</h3>
+        <p>保留原作品集完整页面：插画 3 页呈现从生成式创意到视觉排版，3D 4 页呈现人物、建筑与道具的手工建模、材质和渲染过程。</p>
+      </div>
+      <div id="creativeSections"></div>
+    </div>
+    <div class="poster-viewer" id="posterViewer" hidden>
+      <div class="deck-toolbar">
+        <button class="deck-back" type="button" id="posterBack">← <span>返回电商传播</span></button>
+        <div class="deck-toolbar-title"><strong id="posterTitle"></strong><span>Complete campaign visual</span></div>
+        <span class="deck-counter">01 / 01</span>
+      </div>
+      <div class="poster-stage"><img class="poster-image" id="posterImage" alt=""></div>
+    </div>
+  </dialog>
+
+  <script>
+    /* 个性化配置：修改这里即可替换姓名、邮箱和项目内容。 */
+    const siteConfig = {
+      name: "蔡登健",
+      email: "3193457458@qq.com",
+      projects: [
+        {
+          title: "策划",
+          category: "品牌策划 × 营销传播",
+          year: "2026",
+          description: "从品牌命题、用户洞察到传播与落地路径，用完整策略把商业目标转化为可执行的体验。",
+          tags: ["Brand Strategy", "Campaign", "Communication"],
+          scene: 0,
+          heroImages: ["assets/previews/planning/changban-cover.webp", "assets/previews/planning/cpb-4d-cover.webp"],
+          kind: "planning",
+          eyebrow: "Planning / Selected cases",
+          cases: [
+            {
+              title: "常伴·宠物生命纪念",
+              category: "品牌策划案",
+              year: "2026",
+              cover: "assets/planning/changban-cover.png",
+              highlight: "assets/planning/changban-highlight.png",
+              deck: "assets/planning/changban",
+              slides: 10,
+              description: "以“让告别有礼，让爱有归处”为品牌命题，将离世后的情绪、服务流程与纪念产品整合为有温度、可执行的服务系统。",
+              points: ["品牌定义与价值主张", "服务流程与纪念产品", "纪念活动、内容与一年落地路径"],
+              roles: ["品牌策略", "服务设计", "产品策划", "传播规划"]
+            },
+            {
+              title: "CPB 4D 精雕系列",
+              category: "营销传播方案",
+              year: "2026",
+              cover: "assets/planning/cpb-4d-cover.png",
+              highlight: "assets/planning/cpb-4d-highlight.png",
+              deck: "assets/planning/cpb-4d",
+              slides: 10,
+              description: "从消费者对“整张脸状态”的抗老判断出发，以“向上，是时间的新方向”串联四款产品，建立线上内容与线下体验闭环。",
+              points: ["消费者洞察与系列内容组织", "核心传播主题与线上内容", "线下 4D 体验与 12 周推进路径"],
+              roles: ["消费者洞察", "传播策略", "内容规划", "活动策划"]
+            }
+          ]
+        },
+        {
+          title: "品牌视觉",
+          category: "品牌系统 × 视觉表达",
+          year: "2026",
+          description: "从品牌识别、视觉语言到包装与应用场景，建立完整、一致并具传播力的品牌表达。",
+          tags: ["Brand Identity", "Visual System", "Art Direction"],
+          scene: 1,
+          heroImages: ["assets/previews/brand-visual/arcbase-cover.webp", "assets/previews/brand-visual/nurv/slide-1.webp"],
+          kind: "collection",
+          eyebrow: "Brand Visual / Selected cases",
+          cases: [
+            {
+              title: "ARCBASE 弧场",
+              category: "棒垒球品牌视觉系统",
+              year: "2026",
+              viewer: "web",
+              cover: "assets/brand-visual/arcbase-cover.png",
+              highlight: "assets/brand-visual/arcbase-highlight.png",
+              web: "assets/brand-visual/arcbase/index.html",
+              description: "以“弧线、击球与场域”为核心，将运动竞技的速度感转化为一套高识别度的品牌视觉与完整产品矩阵。",
+              points: ["品牌标志、语气与核心概念", "多巴胺色彩与运动图形系统", "球棒、护具、训练球与生活方式应用"],
+              roles: ["品牌视觉", "视觉系统", "产品矩阵", "网页呈现"]
+            },
+            {
+              title: "NURV 轻食品牌",
+              category: "商业品牌视觉作品集",
+              year: "2026",
+              viewer: "deck",
+              cover: "assets/brand-visual/nurv/slide-1.png",
+              highlight: "assets/brand-visual/nurv/slide-3.png",
+              deck: "assets/brand-visual/nurv",
+              slides: 7,
+              description: "围绕“用营养，滋养每一天的活力”，构建清新、轻盈、有能量的轻食品牌识别与包装系统。",
+              points: ["品牌定位与核心视觉识别", "色彩、字体与宣传海报语言", "全系列产品矩阵与包装应用"],
+              roles: ["品牌识别", "包装设计", "视觉规范", "商业应用"]
+            }
+          ]
+        },
+        {
+          title: "社区项目",
+          category: "社区共创 × 空间激活",
+          year: "2026",
+          description: "马家堡·有样社区文化共创项目：从现场调研与居民参与出发，将视觉系统、公共画展和空间改造连接成完整的社区行动。",
+          tags: ["Community", "Co-creation", "Spatial Activation"],
+          scene: 2,
+          heroImages: ["assets/previews/community/majiaobao/slide-1.webp", "assets/previews/community/majiaobao/slide-7.webp"],
+          kind: "community",
+          projectTitle: "马家堡·有样",
+          deck: "assets/community/majiaobao",
+          slides: 7,
+          chapters: ["项目命题", "现场调研", "视觉系统", "策划流程", "物料制作", "公共画展", "空间激活"]
+        },
+        {
+          title: "电商传播",
+          category: "促销视觉 × 产品传播",
+          year: "2026",
+          description: "面向零售促销与健康产品传播场景，用清晰的信息层级、产品视觉和系列化模板提高货架与电商触点中的识别效率。",
+          tags: ["E-commerce", "Campaign", "Key Visual"],
+          scene: 3,
+          heroImages: ["assets/previews/ecommerce/market/cover.webp", "assets/previews/ecommerce/laimeng/poster.webp"],
+          kind: "ecommerce",
+          eyebrow: "E-commerce communication / Selected cases",
+          cases: [
+            {
+              title: "鲜市集·蔬果促销海报",
+              category: "超市促销视觉",
+              year: "2026",
+              viewer: "web",
+              cover: "assets/ecommerce/market/cover.png",
+              highlight: "assets/ecommerce/market/01-青蓝-番茄促销-纯产品.png",
+              web: "assets/ecommerce/market/index.html",
+              description: "为超市日常生鲜促销建立可快速替换品类与价格信息的六版系列海报，在高信息密度中保持鲜明货架识别。",
+              star: {
+                situation: "生鲜促销更新频繁，不同蔬果需要在门店与电商触点保持统一又有品类区分。",
+                task: "建立一套能快速换品、换价，同时在远距离阅读中突出核心优惠的视觉模板。",
+                action: "以高饱和品类色、超大价格和产品符号组织番茄、上海青、砂糖橘、火龙果、阳光玫瑰与甜玉米六版海报。",
+                result: "形成完整六版促销系统，兼顾系列一致性、单品识别和快速运营复用。"
+              },
+              roles: ["促销策略", "系列海报", "信息层级", "模板系统"]
+            },
+            {
+              title: "来檬·姜黄素产品海报",
+              category: "健康产品传播",
+              year: "2026",
+              viewer: "poster",
+              cover: "assets/ecommerce/laimeng/poster.png",
+              highlight: "assets/ecommerce/laimeng/poster.png",
+              poster: "assets/ecommerce/laimeng/poster.png",
+              description: "围绕 BioPerine® 胡椒碱与 C3 姜黄素的原料优势，将专业成分信息转译为兼具科学感和视觉冲击力的产品宣传海报。",
+              star: {
+                situation: "健康产品成分专业、信息门槛高，消费者难以在短时间内理解配方卖点。",
+                task: "让 98% 精选原料、BioPerine® 胡椒碱与 C3 姜黄素成为第一视觉记忆。",
+                action: "以黑胡椒、姜黄粉末和胶囊构成强对比产品场景，并分别探索暗色冲击版与浅色信息版。",
+                result: "完成一组双版式传播视觉，同时覆盖品牌氛围塑造与成分信息清晰传达。"
+              },
+              roles: ["产品视觉", "成分传播", "电商海报", "版式设计"]
+            }
+          ]
+        },
+        {
+          title: "插画与 3D",
+          category: "AI 创作 × 三维建模",
+          year: "2026",
+          description: "一组并行的创作实验：以 AI 工作流完成插画创意与排版，同时通过 ZBrush、Maya、Blender 手工完成角色、建筑和道具模型。",
+          tags: ["AI Illustration", "ZBrush", "Maya", "Blender"],
+          scene: 4,
+          heroImages: ["assets/previews/creative/illustration/slide-1.webp", "assets/previews/creative/3d/slide-1.webp"],
+          kind: "creative-full",
+          eyebrow: "Illustration & 3D / Selected works",
+          cases: [
+            {
+              title: "AI 插画实验",
+              category: "生成式插画与版式",
+              year: "2026",
+              viewer: "deck",
+              cover: "assets/creative/illustration/slide-1.png",
+              highlight: "assets/creative/illustration/slide-3.png",
+              deck: "assets/creative/illustration",
+              slides: 3,
+              description: "围绕明亮蜡笔质感与社区人物关系进行生成式插画实验，并将生成结果发展为完整视觉海报。",
+              workflow: ["GPT 编写创意 demo 与画面描述", "即梦生成图像并筛选视觉方向", "AI 辅助排版与海报整理"],
+              roles: ["Prompt Design", "即梦生成", "AI 排版", "视觉海报"]
+            },
+            {
+              title: "3D 模型作品",
+              category: "人物、建筑与道具建模",
+              year: "2026",
+              viewer: "deck",
+              cover: "assets/creative/3d/slide-1.png",
+              highlight: "assets/creative/3d/slide-3.png",
+              deck: "assets/creative/3d",
+              slides: 4,
+              description: "从形体雕刻、拓扑与材质到灯光渲染均为个人手工完成，覆盖写实人物、建筑场景与道具资产。",
+              workflow: ["ZBrush 雕刻人物与形体细节", "Maya 建模、拓扑与资产整理", "Blender 场景搭建、材质与渲染"],
+              roles: ["ZBrush", "Maya", "Blender", "建模 / 材质 / 渲染"]
+            }
+          ]
+        }
+      ]
+    };
+
+    const previewAsset = source => source
+      .replace(/^assets\//, "assets/previews/")
+      .replace(/\.(png|jpe?g)$/i, ".webp");
+
+    function initLiquidEther() {
+      const canvas = document.querySelector("#liquidEther");
+      if (!canvas) return;
+      canvas.style.background = "radial-gradient(circle at 24% 28%, #5227ff 0, transparent 38%), radial-gradient(circle at 78% 36%, #ff9ffc 0, transparent 40%), radial-gradient(circle at 55% 82%, #b497cf 0, transparent 44%)";
+      const gl = canvas.getContext("webgl", { alpha: true, antialias: false, depth: false, premultipliedAlpha: false });
+      if (!gl) return;
+
+      const vertexSource = `
+        attribute vec2 a_position;
+        varying vec2 v_uv;
+        void main() {
+          v_uv = a_position * .5 + .5;
+          gl_Position = vec4(a_position, 0.0, 1.0);
+        }`;
+      const fragmentSource = `
+        precision highp float;
+        varying vec2 v_uv;
+        uniform vec2 u_resolution;
+        uniform vec2 u_pointer;
+        uniform float u_time;
+        uniform float u_force;
+
+        float hash(vec2 p) {
+          p = fract(p * vec2(123.34, 456.21));
+          p += dot(p, p + 45.32);
+          return fract(p.x * p.y);
+        }
+        float noise(vec2 p) {
+          vec2 i = floor(p);
+          vec2 f = fract(p);
+          f = f * f * (3.0 - 2.0 * f);
+          return mix(mix(hash(i), hash(i + vec2(1.0, 0.0)), f.x), mix(hash(i + vec2(0.0, 1.0)), hash(i + vec2(1.0)), f.x), f.y);
+        }
+        float fbm(vec2 p) {
+          float value = 0.0;
+          float amplitude = .52;
+          mat2 rotation = mat2(.82, -.57, .57, .82);
+          for (int i = 0; i < 5; i++) {
+            value += amplitude * noise(p);
+            p = rotation * p * 2.03 + 13.7;
+            amplitude *= .5;
+          }
+          return value;
+        }
+        void main() {
+          vec2 uv = v_uv;
+          float aspect = u_resolution.x / max(u_resolution.y, 1.0);
+          vec2 p = (uv - .5) * vec2(aspect, 1.0);
+          vec2 mouse = (u_pointer - .5) * vec2(aspect, 1.0);
+          float t = u_time * .3;
+          vec2 q = vec2(fbm(p * 1.7 + vec2(t * .11, -t * .08)), fbm(p * 1.7 + vec2(5.2, 1.3) - t * .09));
+          vec2 r = vec2(fbm(p * 1.35 + 2.15 * q + vec2(1.7, 9.2) + t * .08), fbm(p * 1.35 + 2.0 * q + vec2(8.3, 2.8) - t * .07));
+          float field = fbm(p * 1.25 + 2.6 * r + t * .035);
+          float dist = length(p - mouse);
+          float influence = exp(-dist * 8.5) * u_force;
+          float wake = sin(dist * 24.0 - t * 4.0) * influence * .18;
+          field = clamp(field + wake + influence * .32, 0.0, 1.0);
+          vec3 c0 = vec3(.3216, .1529, 1.0);
+          vec3 c1 = vec3(1.0, .6235, .9882);
+          vec3 c2 = vec3(.7059, .5922, .8118);
+          vec3 color = mix(c0, c2, smoothstep(.08, .62, field));
+          color = mix(color, c1, smoothstep(.48, .96, field + .13 * sin((p.x + p.y + t * .08) * 4.0)));
+          float veil = .72 + .28 * smoothstep(.0, .9, field);
+          gl_FragColor = vec4(color, veil);
+        }`;
+
+      const compile = (type, source) => {
+        const shader = gl.createShader(type);
+        gl.shaderSource(shader, source);
+        gl.compileShader(shader);
+        if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) return null;
+        return shader;
+      };
+      const vertex = compile(gl.VERTEX_SHADER, vertexSource);
+      const fragment = compile(gl.FRAGMENT_SHADER, fragmentSource);
+      if (!vertex || !fragment) return;
+      const program = gl.createProgram();
+      gl.attachShader(program, vertex);
+      gl.attachShader(program, fragment);
+      gl.linkProgram(program);
+      if (!gl.getProgramParameter(program, gl.LINK_STATUS)) return;
+      gl.useProgram(program);
+      const buffer = gl.createBuffer();
+      gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
+      gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1, 1,-1, -1,1, -1,1, 1,-1, 1,1]), gl.STATIC_DRAW);
+      const position = gl.getAttribLocation(program, "a_position");
+      gl.enableVertexAttribArray(position);
+      gl.vertexAttribPointer(position, 2, gl.FLOAT, false, 0, 0);
+      const resolutionUniform = gl.getUniformLocation(program, "u_resolution");
+      const pointerUniform = gl.getUniformLocation(program, "u_pointer");
+      const timeUniform = gl.getUniformLocation(program, "u_time");
+      const forceUniform = gl.getUniformLocation(program, "u_force");
+      const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+      const lowEnd = navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 2;
+      const mobile = matchMedia("(pointer: coarse), (max-width: 680px)").matches;
+      const resolutionScale = mobile || lowEnd ? .3 : .4;
+      const pointer = { x: .5, y: .5, tx: .5, ty: .5, force: 0, targetForce: 0, lastMove: -Infinity };
+      const frameInterval = mobile ? 1000 / 30 : 1000 / 45;
+      let start = performance.now();
+      let lastPaint = 0;
+      let raf = 0;
+
+      const resize = () => {
+        const dpr = Math.min(devicePixelRatio || 1, mobile ? 1 : 1.35);
+        canvas.width = Math.max(1, Math.round(innerWidth * resolutionScale * dpr));
+        canvas.height = Math.max(1, Math.round(innerHeight * resolutionScale * dpr));
+        gl.viewport(0, 0, canvas.width, canvas.height);
+      };
+      const setPointer = (clientX, clientY) => {
+        pointer.tx = clientX / Math.max(innerWidth, 1);
+        pointer.ty = 1 - clientY / Math.max(innerHeight, 1);
+        pointer.targetForce = 1;
+        pointer.lastMove = performance.now();
+      };
+      addEventListener("pointermove", event => setPointer(event.clientX, event.clientY), { passive: true });
+      addEventListener("touchmove", event => {
+        const touch = event.touches[0];
+        if (touch) setPointer(touch.clientX, touch.clientY);
+      }, { passive: true });
+      addEventListener("resize", resize, { passive: true });
+      resize();
+
+      const draw = now => {
+        raf = 0;
+        if (document.hidden) return;
+        if (now - lastPaint < frameInterval) { raf = requestAnimationFrame(draw); return; }
+        lastPaint = now;
+        const elapsed = (now - start) / 1000;
+        const idle = now - pointer.lastMove > 3000;
+        if (idle) {
+          pointer.tx = .5 + Math.sin(elapsed * .3) * .28;
+          pointer.ty = .5 + Math.cos(elapsed * .24) * .2;
+          pointer.targetForce = .42;
+        }
+        pointer.x += (pointer.tx - pointer.x) * .12;
+        pointer.y += (pointer.ty - pointer.y) * .12;
+        pointer.force += (pointer.targetForce - pointer.force) * .09;
+        if (!idle && now - pointer.lastMove > 180) pointer.targetForce *= .94;
+        gl.uniform2f(resolutionUniform, canvas.width, canvas.height);
+        gl.uniform2f(pointerUniform, pointer.x, pointer.y);
+        gl.uniform1f(timeUniform, elapsed);
+        gl.uniform1f(forceUniform, pointer.force * 2.2);
+        gl.drawArrays(gl.TRIANGLES, 0, 6);
+        if (!reduced && !lowEnd) raf = requestAnimationFrame(draw);
+      };
+      const startDrawing = () => { if (!document.hidden && !raf) raf = requestAnimationFrame(draw); };
+      document.addEventListener("visibilitychange", () => {
+        if (document.hidden && raf) { cancelAnimationFrame(raf); raf = 0; }
+        else startDrawing();
+      });
+      addEventListener("pagehide", () => { if (raf) cancelAnimationFrame(raf); }, { once: true });
+      startDrawing();
+    }
+
+    initLiquidEther();
+
+    const scenes = [
+      { sky: "#c8c8c8", far: "#777", near: "#222", sun: [78, 26], seed: 1 },
+      { sky: "#a6a6a6", far: "#565656", near: "#171717", sun: [24, 28], seed: 2 },
+      { sky: "#d9d9d9", far: "#838383", near: "#292929", sun: [68, 23], seed: 3 },
+      { sky: "#858585", far: "#414141", near: "#101010", sun: [35, 30], seed: 4 },
+      { sky: "#bcbcbc", far: "#666", near: "#1c1c1c", sun: [82, 18], seed: 5 },
+      { sky: "#737373", far: "#383838", near: "#090909", sun: [18, 20], seed: 6 },
+      { sky: "#cbcbcb", far: "#747474", near: "#202020", sun: [54, 24], seed: 7 },
+      { sky: "#929292", far: "#4e4e4e", near: "#141414", sun: [72, 36], seed: 8 },
+      { sky: "#d0d0d0", far: "#7c7c7c", near: "#242424", sun: [28, 21], seed: 9 },
+      { sky: "#7e7e7e", far: "#454545", near: "#0d0d0d", sun: [56, 19], seed: 10 }
+    ];
+
+    const layouts = [
+      { x: -238, y: -145, z: -200, rx: 5, ry: -5, s: .90 },
+      { x: 238, y: -168, z: -300, rx: -3, ry: 4, s: .85 },
+      { x: -292, y: 132, z: -400, rx: -4, ry: -6, s: .80 },
+      { x: 292, y: 155, z: -500, rx: 5, ry: 5, s: .75 },
+      { x: 0, y: -205, z: -700, rx: 6, ry: 0, s: .70 },
+      { x: -338, y: 0, z: -800, rx: 0, ry: -7, s: .65 },
+      { x: 338, y: 0, z: -900, rx: 0, ry: 7, s: .60 },
+      { x: 0, y: 205, z: -1000, rx: -6, ry: 0, s: .55 },
+      { x: -195, y: -100, z: -1200, rx: 3, ry: -3, s: .50 },
+      { x: 195, y: -100, z: -1300, rx: 3, ry: 3, s: .45 }
+    ];
+
+    function makeArtwork(scene, index) {
+      const stars = Array.from({ length: 18 }, (_, i) => {
+        const x = (i * 41 + scene.seed * 19) % 790;
+        const y = (i * 23 + scene.seed * 11) % 190;
+        const r = i % 5 === 0 ? 1.4 : .65;
+        return `<circle cx="${x}" cy="${y}" r="${r}" fill="#fff" opacity="${.2 + (i % 4) * .12}"/>`;
+      }).join("");
+      const ridgeA = index % 2
+        ? "M0 310 L90 235 L170 270 L265 170 L350 246 L446 158 L545 238 L650 180 L800 275 V450 H0Z"
+        : "M0 285 L112 215 L220 266 L326 146 L415 230 L520 190 L628 252 L715 182 L800 225 V450 H0Z";
+      const ridgeB = index % 3
+        ? "M0 342 L115 284 L205 329 L330 250 L452 326 L575 252 L692 318 L800 274 V450 H0Z"
+        : "M0 356 L100 292 L230 345 L345 270 L478 322 L598 266 L710 329 L800 302 V450 H0Z";
+      const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450">
+        <defs><linearGradient id="s" x1="0" y1="0" x2="0" y2="1"><stop stop-color="${scene.sky}"/><stop offset="1" stop-color="#343434"/></linearGradient><filter id="g"><feTurbulence baseFrequency=".55" numOctaves="2"/><feColorMatrix type="saturate" values="0"/><feComponentTransfer><feFuncA type="table" tableValues="0 .14"/></feComponentTransfer></filter></defs>
+        <rect width="800" height="450" fill="url(#s)"/><circle cx="${scene.sun[0] * 8}" cy="${scene.sun[1] * 4.5}" r="35" fill="#e4e4e4" opacity=".25"/>${stars}
+        <path d="${ridgeA}" fill="${scene.far}"/><path d="${ridgeB}" fill="${scene.near}"/>
+        <path d="M0 360 Q120 330 235 370 T470 350 T800 365 V450 H0Z" fill="#080808" opacity=".68"/>
+        <rect width="800" height="450" filter="url(#g)" opacity=".48"/>
+        <text x="28" y="408" fill="#fff" opacity=".48" font-family="monospace" font-size="12" letter-spacing="3">ARCHIVE / 0${index + 1}</text>
+      </svg>`;
+      return `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}`;
+    }
+
+    const artworks = scenes.map(makeArtwork);
+    const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const coarsePointer = matchMedia("(pointer: coarse)").matches;
+    const sceneEl = document.querySelector("#scene");
+    const dialog = document.querySelector("#projectDialog");
+    const deckViewer = document.querySelector("#deckViewer");
+    const webViewer = document.querySelector("#webViewer");
+    const communityViewer = document.querySelector("#communityViewer");
+    const posterViewer = document.querySelector("#posterViewer");
+    const creativeViewer = document.querySelector("#creativeViewer");
+    let activeCollectionProject = null;
+    let activeDeckCase = null;
+    let activeDeckSlide = 0;
+    const cards = [];
+
+    document.querySelectorAll('[data-bind="name"]').forEach(el => el.textContent = siteConfig.name);
+    document.querySelectorAll('[data-bind="email"]').forEach(el => el.textContent = siteConfig.email);
+    document.querySelectorAll("[data-email-link]").forEach(el => el.href = `mailto:${siteConfig.email}`);
+    document.querySelector("#year").textContent = new Date().getFullYear();
+    document.title = `${siteConfig.name} — Portfolio`;
+
+    layouts.forEach((layout, index) => {
+      const project = siteConfig.projects[index % siteConfig.projects.length];
+      const card = document.createElement("button");
+      card.className = "parallax-card";
+      card.type = "button";
+      card.dataset.index = index;
+      card.dataset.project = index % siteConfig.projects.length;
+      card.setAttribute("aria-label", `打开项目：${project.title}`);
+      const imageSet = project.heroImages || [];
+      const heroImage = imageSet[Math.floor(index / siteConfig.projects.length) % imageSet.length] || artworks[index];
+      card.innerHTML = `<img src="${heroImage}" alt="${project.title}作品预览" draggable="false" decoding="async" fetchpriority="${index < 3 ? "high" : "low"}"><span class="card-meta"><span><strong>${project.title}</strong><small>${project.category}</small></span><span class="card-index">${String(index + 1).padStart(2, "0")}</span></span>`;
+      sceneEl.append(card);
+      cards.push({ el: card, ...layout });
+      card.addEventListener("click", () => openProject(Number(card.dataset.project), index));
+    });
+
+    function renderScene(nx = 0, ny = 0) {
+      cards.forEach((card, index) => {
+        const depth = (Math.abs(card.z) - 150) / 1200;
+        const move = 24 + (1 - depth) * 38;
+        const px = card.x + nx * move;
+        const py = card.y + ny * move * .72;
+        const ry = card.ry + nx * (5 + (1 - depth) * 4);
+        const rx = card.rx - ny * (4 + (1 - depth) * 3);
+        card.el.style.transform = `translate(-50%, -50%) translate3d(${px}px, ${py}px, ${card.z}px) rotateX(${rx}deg) rotateY(${ry}deg) scale(${card.s})`;
+        card.el.style.zIndex = String(50 - index);
+        const fog = Math.max(0, depth - .55);
+        card.el.style.opacity = String(1 - fog * .35);
+        card.el.style.filter = `blur(${fog * 2.2}px)`;
+      });
+    }
+    renderScene();
+
+    if (!reducedMotion && !coarsePointer) {
+      let tx = 0, ty = 0, cx = 0, cy = 0, raf = 0;
+      const tick = () => {
+        cx += (tx - cx) * .065;
+        cy += (ty - cy) * .065;
+        renderScene(cx, cy);
+        if (Math.abs(tx - cx) + Math.abs(ty - cy) > .002) raf = requestAnimationFrame(tick); else raf = 0;
+      };
+      sceneEl.addEventListener("pointermove", event => {
+        const rect = sceneEl.getBoundingClientRect();
+        tx = ((event.clientX - rect.left) / rect.width - .5) * 2;
+        ty = ((event.clientY - rect.top) / rect.height - .5) * 2;
+        if (!raf) raf = requestAnimationFrame(tick);
+      });
+      sceneEl.addEventListener("pointerleave", () => { tx = 0; ty = 0; if (!raf) raf = requestAnimationFrame(tick); });
+    }
+
+    const projectList = document.querySelector("#projectList");
+    siteConfig.projects.forEach((project, index) => {
+      const row = document.createElement("article");
+      row.className = "project-row";
+      row.innerHTML = `<span class="no">${String(index + 1).padStart(2, "0")}</span><h3>${project.title}</h3><p>${project.category} · ${project.year}</p><span class="arrow" aria-hidden="true">↗</span><button type="button" aria-label="查看项目 ${project.title}"></button>`;
+      row.querySelector("button").addEventListener("click", () => openProject(index, project.scene));
+      projectList.append(row);
+    });
+
+    function initProfileCardTilt() {
+      const card = document.querySelector("#profileCard");
+      if (!card || reducedMotion || coarsePointer) return;
+      let pending = null;
+      let raf = 0;
+      const renderTilt = () => {
+        raf = 0;
+        if (!pending) return;
+        const rect = card.getBoundingClientRect();
+        const nx = Math.max(-1, Math.min(1, ((pending.x - rect.left) / rect.width - .5) * 2));
+        const ny = Math.max(-1, Math.min(1, ((pending.y - rect.top) / rect.height - .5) * 2));
+        card.style.setProperty("--profile-rx", `${(-ny * 7).toFixed(2)}deg`);
+        card.style.setProperty("--profile-ry", `${(nx * 9).toFixed(2)}deg`);
+        card.style.setProperty("--profile-mx", `${((nx + 1) * 50).toFixed(1)}%`);
+        card.style.setProperty("--profile-my", `${((ny + 1) * 50).toFixed(1)}%`);
+      };
+      card.addEventListener("pointermove", event => {
+        pending = { x: event.clientX, y: event.clientY };
+        if (!raf) raf = requestAnimationFrame(renderTilt);
+      }, { passive: true });
+      card.addEventListener("pointerleave", () => {
+        pending = null;
+        card.style.setProperty("--profile-rx", "0deg");
+        card.style.setProperty("--profile-ry", "0deg");
+        card.style.setProperty("--profile-mx", "50%");
+        card.style.setProperty("--profile-my", "50%");
+      }, { passive: true });
+    }
+
+    function initBorderGlow() {
+      const selector = [
+        ".parallax-card", ".project-row", ".profile-card", ".stat", ".contact-card", ".contact-link", ".button", ".nav-cta", ".modal-close", ".planning-case", ".case-highlight", ".deck-stage", ".deck-thumb", ".web-frame-shell", ".community-compare", ".star-item", ".poster-stage", ".workflow-step", ".creative-page"
+      ].join(",");
+      const decorate = root => {
+        const candidates = [];
+        if (root.nodeType === 1 && root.matches?.(selector)) candidates.push(root);
+        root.querySelectorAll?.(selector).forEach(element => candidates.push(element));
+        candidates.forEach(element => {
+          if (element.classList.contains("has-border-glow")) return;
+          element.classList.add("has-border-glow");
+          if (getComputedStyle(element).position === "static") element.style.position = "relative";
+          const glow = document.createElement("span");
+          glow.className = "border-glow-layer";
+          glow.setAttribute("aria-hidden", "true");
+          element.append(glow);
+        });
+      };
+      decorate(document);
+      new MutationObserver(records => records.forEach(record => record.addedNodes.forEach(node => { if (node.nodeType === 1) decorate(node); }))).observe(document.body, { childList: true, subtree: true });
+      let glowPending = null;
+      let glowRaf = 0;
+      document.addEventListener("pointermove", event => {
+        if (coarsePointer) return;
+        const element = event.target.closest?.(".has-border-glow");
+        if (!element) return;
+        glowPending = { element, clientX: event.clientX, clientY: event.clientY };
+        if (glowRaf) return;
+        glowRaf = requestAnimationFrame(() => {
+          glowRaf = 0;
+          if (!glowPending) return;
+          const { element: target, clientX, clientY } = glowPending;
+          const rect = target.getBoundingClientRect();
+          const x = clientX - rect.left;
+          const y = clientY - rect.top;
+          const edgeDistance = Math.min(x, y, rect.width - x, rect.height - y);
+          const alpha = Math.max(0, Math.min(1, (36 - edgeDistance) / 36 * 2.5));
+          target.style.setProperty("--glow-x", `${x}px`);
+          target.style.setProperty("--glow-y", `${y}px`);
+          target.style.setProperty("--glow-alpha", alpha.toFixed(3));
+        });
+      }, { passive: true });
+      document.addEventListener("pointerout", event => {
+        const element = event.target.closest?.(".has-border-glow");
+        if (element && !element.contains(event.relatedTarget)) element.style.setProperty("--glow-alpha", "0");
+      }, { passive: true });
+      document.addEventListener("focusin", event => event.target.closest?.(".has-border-glow")?.style.setProperty("--glow-alpha", ".9"));
+      document.addEventListener("focusout", event => event.target.closest?.(".has-border-glow")?.style.setProperty("--glow-alpha", "0"));
+    }
+
+    initProfileCardTilt();
+    initBorderGlow();
+
+    function openProject(projectIndex, artIndex) {
+      const project = siteConfig.projects[projectIndex];
+      const standardProject = document.querySelector("#standardProject");
+      const planningProject = document.querySelector("#planningProject");
+      if (project.kind === "creative-full") {
+        dialog.classList.add("planning-open");
+        standardProject.hidden = true;
+        planningProject.hidden = true;
+        deckViewer.hidden = true;
+        webViewer.hidden = true;
+        communityViewer.hidden = true;
+        posterViewer.hidden = true;
+        creativeViewer.hidden = false;
+        document.querySelector("#creativeSections").innerHTML = project.cases.map((item, caseIndex) => `
+          <section class="creative-section">
+            <div class="creative-section-head">
+              <div>
+                <span class="creative-section-index">Project ${String(caseIndex + 1).padStart(2, "0")} / ${item.category}</span>
+                <h4>${item.title}</h4>
+                <div class="planning-role">${item.roles.map(role => `<span>${role}</span>`).join("")}</div>
+              </div>
+              <div class="creative-section-copy">
+                <p>${item.description}</p>
+                <div class="workflow">${item.workflow.map((step, stepIndex) => `<div class="workflow-step"><span>Step 0${stepIndex + 1}</span><strong>${step}</strong></div>`).join("")}</div>
+              </div>
+            </div>
+            <div class="creative-pages">${Array.from({ length: item.slides }, (_, pageIndex) => `
+              <figure class="creative-page">
+                <figcaption><span>${item.title} / ${String(pageIndex + 1).padStart(2, "0")}</span><span>Original PDF page ${String(pageIndex + 1).padStart(2, "0")} / ${String(item.slides).padStart(2, "0")}</span></figcaption>
+                <img src="${item.deck}/slide-${pageIndex + 1}.png" alt="${item.title}原作品集第 ${pageIndex + 1} 页" ${pageIndex > 0 ? 'loading="lazy"' : ''}>
+              </figure>`).join("")}
+            </div>
+          </section>`).join("");
+        dialog.showModal();
+        dialog.scrollTo({ top: 0, behavior: "auto" });
+        requestAnimationFrame(observeCreativePages);
+        return;
+      }
+      if (project.kind === "community") {
+        dialog.classList.add("planning-open");
+        standardProject.hidden = true;
+        planningProject.hidden = true;
+        deckViewer.hidden = true;
+        webViewer.hidden = true;
+        communityViewer.hidden = false;
+        posterViewer.hidden = true;
+        creativeViewer.hidden = true;
+        document.querySelector("#communityPages").innerHTML = Array.from({ length: project.slides }, (_, index) => `
+          <figure class="community-page">
+            <figcaption><span>${String(index + 1).padStart(2, "0")} / ${project.chapters[index]}</span><span>Original project page ${String(index + 1).padStart(2, "0")}</span></figcaption>
+            <img src="${project.deck}/slide-${index + 1}.png" alt="${project.projectTitle}项目：${project.chapters[index]}" ${index > 1 ? 'loading="lazy"' : ''}>
+          </figure>`).join("");
+        const compare = document.querySelector("#communityCompare");
+        const range = document.querySelector("#communityRange");
+        compare.classList.remove("manual");
+        range.value = 100;
+        compare.style.setProperty("--community-reveal", "0%");
+        requestAnimationFrame(() => {
+          compare.style.removeProperty("--community-reveal");
+          observeCommunityPages();
+        });
+        dialog.showModal();
+        dialog.scrollTo({ top: 0, behavior: "auto" });
+        return;
+      }
+      if (["planning", "collection", "ecommerce", "creative"].includes(project.kind)) {
+        activeCollectionProject = project;
+        dialog.classList.add("planning-open");
+        standardProject.hidden = true;
+        planningProject.hidden = false;
+        deckViewer.hidden = true;
+        webViewer.hidden = true;
+        communityViewer.hidden = true;
+        posterViewer.hidden = true;
+        creativeViewer.hidden = true;
+        document.querySelector("#webFrame").src = "about:blank";
+        document.querySelector("#planningEyebrow").textContent = project.eyebrow;
+        document.querySelector("#planningTitle").textContent = project.title;
+        document.querySelector("#planningDescription").textContent = project.description;
+        document.querySelector("#planningCases").innerHTML = project.cases.map((item, index) => `
+          <article class="planning-case${project.kind === "ecommerce" ? " ecommerce-case" : ""}">
+            <div class="case-visuals">
+              <img class="case-cover" src="${previewAsset(item.cover)}" alt="${item.title}方案封面" decoding="async">
+              <img class="case-highlight" src="${previewAsset(item.highlight)}" alt="${item.title}代表策略页" loading="lazy" decoding="async">
+            </div>
+            <div class="case-copy">
+              <div class="case-label"><span>Case ${String(index + 1).padStart(2, "0")} / ${item.category}</span><span>${item.year}</span></div>
+              <h4>${item.title}</h4>
+              <p>${item.description}</p>
+              ${item.points ? `<ul class="case-points">${item.points.map((point, pointIndex) => `<li><span>0${pointIndex + 1}</span>${point}</li>`).join("")}</ul>` : ""}
+              ${item.star ? `<div class="star-grid">
+                <div class="star-item"><strong>S / 背景</strong><p>${item.star.situation}</p></div>
+                <div class="star-item"><strong>T / 任务</strong><p>${item.star.task}</p></div>
+                <div class="star-item"><strong>A / 行动</strong><p>${item.star.action}</p></div>
+                <div class="star-item"><strong>R / 结果</strong><p>${item.star.result}</p></div>
+              </div>` : ""}
+              ${item.workflow ? `<div class="workflow">${item.workflow.map((step, stepIndex) => `<div class="workflow-step"><span>Step 0${stepIndex + 1}</span><strong>${step}</strong></div>`).join("")}</div>` : ""}
+              <div class="planning-role">${item.roles.map(role => `<span>${role}</span>`).join("")}</div>
+              <button class="deck-open" type="button" data-case-index="${index}"><span>${project.kind === "creative" ? "逐页查看作品" : "查看完整方案"}</span><span>${item.viewer === "web" ? "完整长页" : item.viewer === "poster" ? "海报大图" : `${item.slides} 页`} ↗</span></button>
+            </div>
+          </article>`).join("");
+        document.querySelectorAll(".deck-open").forEach(button => button.addEventListener("click", () => openCase(Number(button.dataset.caseIndex))));
+        dialog.showModal();
+        return;
+      }
+      dialog.classList.remove("planning-open");
+      standardProject.hidden = false;
+      planningProject.hidden = true;
+      deckViewer.hidden = true;
+      webViewer.hidden = true;
+      communityViewer.hidden = true;
+      posterViewer.hidden = true;
+      creativeViewer.hidden = true;
+      activeDeckCase = null;
+      document.querySelector("#dialogImage").src = artworks[artIndex % artworks.length];
+      document.querySelector("#dialogImage").alt = `${project.title} 项目视觉`;
+      document.querySelector("#dialogTitle").textContent = project.title;
+      document.querySelector("#dialogCategory").textContent = `${project.category} / ${project.year}`;
+      document.querySelector("#dialogDescription").textContent = project.description;
+      document.querySelector("#dialogTags").innerHTML = project.tags.map(tag => `<span>${tag}</span>`).join("");
+      dialog.showModal();
+    }
+
+    function openCase(caseIndex) {
+      const selectedCase = activeCollectionProject.cases[caseIndex];
+      if (selectedCase.viewer === "web") {
+        openWebCase(selectedCase);
+        return;
+      }
+      if (selectedCase.viewer === "poster") {
+        openPosterCase(selectedCase);
+        return;
+      }
+      openDeck(selectedCase);
+    }
+
+    function openDeck(selectedCase) {
+      activeDeckCase = selectedCase;
+      activeDeckSlide = 0;
+      document.querySelector("#planningProject").hidden = true;
+      deckViewer.hidden = false;
+      webViewer.hidden = true;
+      posterViewer.hidden = true;
+      document.querySelector("#deckTitle").textContent = activeDeckCase.title;
+      document.querySelector("#deckBack span").textContent = `返回${activeCollectionProject.title}`;
+      document.querySelector("#deckThumbs").innerHTML = Array.from({ length: activeDeckCase.slides }, (_, index) => `
+        <button class="deck-thumb${index === 0 ? " active" : ""}" type="button" data-slide="${index}" aria-label="查看第 ${index + 1} 页">
+          <img src="${previewAsset(`${activeDeckCase.deck}/slide-${index + 1}.png`)}" alt="" loading="lazy" decoding="async"><span>${String(index + 1).padStart(2, "0")}</span>
+        </button>`).join("");
+      document.querySelectorAll(".deck-thumb").forEach(button => button.addEventListener("click", () => setDeckSlide(Number(button.dataset.slide))));
+      setDeckSlide(0);
+      dialog.scrollTo({ top: 0, behavior: reducedMotion ? "auto" : "smooth" });
+    }
+
+    function openWebCase(selectedCase) {
+      activeDeckCase = null;
+      document.querySelector("#planningProject").hidden = true;
+      deckViewer.hidden = true;
+      webViewer.hidden = false;
+      posterViewer.hidden = true;
+      document.querySelector("#webTitle").textContent = selectedCase.title;
+      document.querySelector("#webSubtitle").textContent = activeCollectionProject.kind === "ecommerce" ? "Complete campaign series" : "Complete brand visual";
+      document.querySelector("#webBack span").textContent = `返回${activeCollectionProject.title}`;
+      document.querySelector("#webOpenNew").href = selectedCase.web;
+      const frame = document.querySelector("#webFrame");
+      frame.title = `${selectedCase.title}完整品牌视觉方案`;
+      frame.src = selectedCase.web;
+      dialog.scrollTo({ top: 0, behavior: reducedMotion ? "auto" : "smooth" });
+    }
+
+    function openPosterCase(selectedCase) {
+      activeDeckCase = null;
+      document.querySelector("#planningProject").hidden = true;
+      deckViewer.hidden = true;
+      webViewer.hidden = true;
+      posterViewer.hidden = false;
+      document.querySelector("#posterTitle").textContent = selectedCase.title;
+      document.querySelector("#posterBack span").textContent = `返回${activeCollectionProject.title}`;
+      const image = document.querySelector("#posterImage");
+      image.src = selectedCase.poster;
+      image.alt = `${selectedCase.title}完整产品传播海报`;
+      dialog.scrollTo({ top: 0, behavior: reducedMotion ? "auto" : "smooth" });
+    }
+
+    function setDeckSlide(index) {
+      if (!activeDeckCase) return;
+      activeDeckSlide = Math.max(0, Math.min(index, activeDeckCase.slides - 1));
+      const number = activeDeckSlide + 1;
+      const slide = document.querySelector("#deckSlide");
+      slide.src = `${activeDeckCase.deck}/slide-${number}.png`;
+      slide.alt = `${activeDeckCase.title}，第 ${number} 页`;
+      document.querySelector("#deckCounter").textContent = `${String(number).padStart(2, "0")} / ${String(activeDeckCase.slides).padStart(2, "0")}`;
+      document.querySelector("#deckPrev").disabled = activeDeckSlide === 0;
+      document.querySelector("#deckNext").disabled = activeDeckSlide === activeDeckCase.slides - 1;
+      document.querySelectorAll(".deck-thumb").forEach((thumb, thumbIndex) => thumb.classList.toggle("active", thumbIndex === activeDeckSlide));
+    }
+
+    function closeDeck() {
+      deckViewer.hidden = true;
+      document.querySelector("#planningProject").hidden = false;
+      activeDeckCase = null;
+      dialog.scrollTo({ top: 0, behavior: reducedMotion ? "auto" : "smooth" });
+    }
+
+    function closeWeb() {
+      webViewer.hidden = true;
+      document.querySelector("#webFrame").src = "about:blank";
+      document.querySelector("#planningProject").hidden = false;
+      dialog.scrollTo({ top: 0, behavior: reducedMotion ? "auto" : "smooth" });
+    }
+
+    function closePoster() {
+      posterViewer.hidden = true;
+      document.querySelector("#planningProject").hidden = false;
+      dialog.scrollTo({ top: 0, behavior: reducedMotion ? "auto" : "smooth" });
+    }
+
+    function observeCommunityPages() {
+      const pages = document.querySelectorAll(".community-page");
+      if (reducedMotion || !("IntersectionObserver" in window)) {
+        pages.forEach(page => page.classList.add("visible"));
+        return;
+      }
+      const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (!entry.isIntersecting) return;
+          entry.target.classList.add("visible");
+          observer.unobserve(entry.target);
+        });
+      }, { root: dialog, threshold: .16, rootMargin: "0px 0px -8% 0px" });
+      pages.forEach(page => observer.observe(page));
+    }
+
+    function observeCreativePages() {
+      const pages = document.querySelectorAll(".creative-page");
+      if (reducedMotion || !("IntersectionObserver" in window)) {
+        pages.forEach(page => page.classList.add("visible"));
+        return;
+      }
+      const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (!entry.isIntersecting) return;
+          entry.target.classList.add("visible");
+          observer.unobserve(entry.target);
+        });
+      }, { root: dialog, threshold: .14, rootMargin: "0px 0px -7% 0px" });
+      pages.forEach(page => observer.observe(page));
+    }
+
+    document.querySelector("#communityRange").addEventListener("input", event => {
+      const compare = document.querySelector("#communityCompare");
+      compare.classList.add("manual");
+      compare.style.setProperty("--community-reveal", `${event.target.value}%`);
+    });
+
+    document.querySelector("#deckBack").addEventListener("click", closeDeck);
+    document.querySelector("#webBack").addEventListener("click", closeWeb);
+    document.querySelector("#posterBack").addEventListener("click", closePoster);
+    document.querySelector("#deckPrev").addEventListener("click", () => setDeckSlide(activeDeckSlide - 1));
+    document.querySelector("#deckNext").addEventListener("click", () => setDeckSlide(activeDeckSlide + 1));
+    addEventListener("keydown", event => {
+      if (!dialog.hasAttribute("open")) return;
+      if (!deckViewer.hidden) {
+        if (event.key === "ArrowLeft") setDeckSlide(activeDeckSlide - 1);
+        if (event.key === "ArrowRight") setDeckSlide(activeDeckSlide + 1);
+        if (event.key === "Escape" && activeDeckCase) { event.preventDefault(); closeDeck(); }
+      } else if (!webViewer.hidden && event.key === "Escape") {
+        event.preventDefault();
+        closeWeb();
+      } else if (!posterViewer.hidden && event.key === "Escape") {
+        event.preventDefault();
+        closePoster();
+      }
+    });
+    document.querySelector("#dialogClose").addEventListener("click", () => dialog.close());
+    dialog.addEventListener("click", event => { if (event.target === dialog) dialog.close(); });
+
+    const header = document.querySelector("#siteHeader");
+    const onScroll = () => header.classList.toggle("scrolled", scrollY > 20);
+    addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+
+    if (!reducedMotion) {
+      const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add("visible"); observer.unobserve(entry.target); } });
+      }, { threshold: .12 });
+      document.querySelectorAll(".reveal").forEach(el => observer.observe(el));
+    } else {
+      document.querySelectorAll(".reveal").forEach(el => el.classList.add("visible"));
+    }
+  </script>
+</body>
+</html>
