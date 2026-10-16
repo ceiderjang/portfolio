@@ -754,6 +754,43 @@
       .creative-page { opacity: 1; transform: none; }
       .profile-card { transform: none; }
     }
+  
+    /* Case study upgrade: full viewport presentation with an accessible sticky toolbar. */
+    #projectDialog.planning-open { width:min(1440px,calc(100vw - 32px)); max-height:calc(100svh - 24px); border-radius:4px; }
+    #projectDialog:has(#webViewer:not([hidden])) { width:100vw; max-width:none; height:100svh; max-height:none; margin:0; border:0; border-radius:0; overflow:hidden; }
+    #projectDialog:has(#webViewer:not([hidden])) .modal-close { position:fixed;top:15px;right:20px;z-index:12;width:34px;height:34px; }
+    .web-viewer { height:100%;min-height:0;display:flex;flex-direction:column; }
+    .web-viewer[hidden] { display:none; }
+    .web-toolbar { min-height:64px;height:64px;flex-shrink:0;padding:10px 72px 10px 24px;gap:20px; }
+    .web-stage { flex:1;min-height:0;padding:0; }
+    .web-frame-shell { height:100%;min-height:0;border:0;border-radius:0;box-shadow:none; }
+    .web-toolbar-title span { color:#a3a3aa; }
+    .planning-head { padding-top:36px;max-width:900px; }
+    .planning-head h3 { line-height:1.15;letter-spacing:-.05em;font-weight:500; }
+    .planning-head > p:last-child { font-size:15px;line-height:1.8;max-width:620px; }
+    .planning-cases { display:block; }
+    .planning-case { display:grid;grid-template-columns:1.2fr 1fr;gap:clamp(24px,4vw,56px);padding:40px 0;border:0;border-top:1px solid #ffffff26;border-radius:0;background:transparent;overflow:visible; }
+    .planning-case:nth-child(even) .case-visuals { order:2; }
+    .planning-case .case-visuals { aspect-ratio:auto;min-height:300px;align-self:stretch; }
+    .planning-case .case-cover { position:absolute;inset:0;object-fit:cover; }
+    .planning-case .case-highlight { display:none; }
+    .planning-case .case-copy { padding:20px 0; }
+    .planning-case .case-copy h4 { font-size:clamp(26px,3vw,42px);line-height:1.25; }
+    .planning-case .case-copy > p { font-size:14px;line-height:1.8; }
+    .planning-case .deck-open { background:transparent;color:#f7f7f8;border:0;border-bottom:1px solid #ffffff4d;border-radius:0;padding:12px 0;font-weight:400; }
+    .planning-case .deck-open:hover { color:var(--color-accent);border-color:var(--color-accent); }
+    .planning-case .star-grid,.planning-case .case-points { display:none; }
+    @media(max-width:680px){
+      #projectDialog.planning-open { width:calc(100vw - 16px); }
+      .web-toolbar { padding:10px 58px 10px 14px;grid-template-columns:auto minmax(0,1fr) auto;gap:12px; }
+      .web-toolbar-title strong { font-size:12px; }.web-toolbar-title span { font-size:7px; }
+      .web-back,.deck-back { font-size:10px;padding:7px; }.web-open-new { font-size:9px; }
+      #projectDialog:has(#webViewer:not([hidden])) .modal-close { top:17px;right:12px;width:30px;height:30px; }
+      .planning-case { grid-template-columns:1fr;gap:20px;padding-block:30px; }
+      .planning-case:nth-child(even) .case-visuals { order:0; }
+      .planning-case .case-visuals { min-height:0;aspect-ratio:16/10; }
+      .planning-case .case-copy { padding:0; }.planning-head { padding-top:18px; }
+    }
   </style>
 </head>
 <body>
@@ -873,7 +910,7 @@
     </section>
   </main>
 
-  <dialog id="projectDialog" aria-labelledby="dialogTitle">
+  <dialog id="projectDialog" aria-label="项目详情">
     <button class="modal-close" type="button" aria-label="关闭项目详情" id="dialogClose">×</button>
     <div id="standardProject">
       <div class="modal-art">
@@ -1143,6 +1180,17 @@
       ]
     };
 
+
+    // <!-- Case study upgrade -->
+    const casePageMap = {
+      "常伴·宠物生命纪念": "changban", "CPB 4D 精雕系列": "cpb",
+      "NURV 轻食品牌": "nurv", "鲜市集·蔬果促销海报": "market",
+      "来檬·姜黄素产品海报": "laimeng", "AI 插画实验": "illustration", "3D 模型作品": "3d"
+    };
+    siteConfig.projects.forEach(project => project.cases?.forEach(item => {
+      if (casePageMap[item.title]) { item.viewer = "web"; item.web = `cases/${casePageMap[item.title]}.html`; }
+    }));
+    
     const previewAsset = source => source
       .replace(/^assets\//, "assets/previews/")
       .replace(/\.(png|jpe?g)$/i, ".webp");
@@ -1519,65 +1567,27 @@
       const project = siteConfig.projects[projectIndex];
       const standardProject = document.querySelector("#standardProject");
       const planningProject = document.querySelector("#planningProject");
-      if (project.kind === "creative-full") {
+      document.querySelector("#dialogTitle").textContent = project.title;
+      if (project.kind === "community") {
+        activeCollectionProject = project;
+        [standardProject, planningProject, deckViewer, communityViewer, posterViewer, creativeViewer].forEach(el => el.hidden = true);
         dialog.classList.add("planning-open");
-        standardProject.hidden = true;
-        planningProject.hidden = true;
-        deckViewer.hidden = true;
-        webViewer.hidden = true;
-        communityViewer.hidden = true;
-        posterViewer.hidden = true;
-        creativeViewer.hidden = false;
-        document.querySelector("#creativeSections").innerHTML = project.cases.map((item, caseIndex) => `
-          <section class="creative-section">
-            <div class="creative-section-head">
-              <div>
-                <span class="creative-section-index">Project ${String(caseIndex + 1).padStart(2, "0")} / ${item.category}</span>
-                <h4>${item.title}</h4>
-                <div class="planning-role">${item.roles.map(role => `<span>${role}</span>`).join("")}</div>
-              </div>
-              <div class="creative-section-copy">
-                <p>${item.description}</p>
-                <div class="workflow">${item.workflow.map((step, stepIndex) => `<div class="workflow-step"><span>Step 0${stepIndex + 1}</span><strong>${step}</strong></div>`).join("")}</div>
-              </div>
-            </div>
-            <div class="creative-pages">${Array.from({ length: item.slides }, (_, pageIndex) => `
-              <figure class="creative-page">
-                <figcaption><span>${item.title} / ${String(pageIndex + 1).padStart(2, "0")}</span><span>Original PDF page ${String(pageIndex + 1).padStart(2, "0")} / ${String(item.slides).padStart(2, "0")}</span></figcaption>
-                <img src="${item.deck}/slide-${pageIndex + 1}.png" alt="${item.title}原作品集第 ${pageIndex + 1} 页" ${pageIndex > 0 ? 'loading="lazy"' : ''}>
-              </figure>`).join("")}
-            </div>
-          </section>`).join("");
+        openWebCase({title: "马家堡·有样", web: "cases/majiaobao.html"});
         dialog.showModal();
-        dialog.scrollTo({ top: 0, behavior: "auto" });
-        requestAnimationFrame(observeCreativePages);
         return;
       }
-      if (project.kind === "community") {
+      if (project.kind === "creative-full") {
+        activeCollectionProject = project;
+        standardProject.hidden = true; planningProject.hidden = false;
+        [deckViewer, webViewer, communityViewer, posterViewer, creativeViewer].forEach(el => el.hidden = true);
         dialog.classList.add("planning-open");
-        standardProject.hidden = true;
-        planningProject.hidden = true;
-        deckViewer.hidden = true;
-        webViewer.hidden = true;
-        communityViewer.hidden = false;
-        posterViewer.hidden = true;
-        creativeViewer.hidden = true;
-        document.querySelector("#communityPages").innerHTML = Array.from({ length: project.slides }, (_, index) => `
-          <figure class="community-page">
-            <figcaption><span>${String(index + 1).padStart(2, "0")} / ${project.chapters[index]}</span><span>Original project page ${String(index + 1).padStart(2, "0")}</span></figcaption>
-            <img src="${project.deck}/slide-${index + 1}.png" alt="${project.projectTitle}项目：${project.chapters[index]}" ${index > 1 ? 'loading="lazy"' : ''}>
-          </figure>`).join("");
-        const compare = document.querySelector("#communityCompare");
-        const range = document.querySelector("#communityRange");
-        compare.classList.remove("manual");
-        range.value = 100;
-        compare.style.setProperty("--community-reveal", "0%");
-        requestAnimationFrame(() => {
-          compare.style.removeProperty("--community-reveal");
-          observeCommunityPages();
-        });
-        dialog.showModal();
-        dialog.scrollTo({ top: 0, behavior: "auto" });
+        document.querySelector("#planningEyebrow").textContent = project.eyebrow;
+        document.querySelector("#planningTitle").textContent = project.title;
+        document.querySelector("#planningDescription").textContent = project.description;
+        document.querySelector("#planningCases").innerHTML = project.cases.map((item,index) => `
+          <article class="planning-case"><div class="case-visuals"><img class="case-cover" src="${previewAsset(item.cover)}" alt="${item.title}作品预览"></div><div class="case-copy"><div class="case-label"><span>0${index+1} / ${item.category}</span><span>${item.year}</span></div><h4>${item.title}</h4><p>${item.description}</p><div class="planning-role">${item.roles.map(role=>`<span>${role}</span>`).join("")}</div><button class="deck-open" type="button" data-case-index="${index}"><span>探索完整项目</span><span>PROJECT STORY ↗</span></button></div></article>`).join("");
+        document.querySelectorAll(".deck-open").forEach(button=>button.addEventListener("click",()=>openCase(Number(button.dataset.caseIndex))));
+        dialog.showModal(); dialog.scrollTo({top:0,behavior:"auto"});
         return;
       }
       if (["planning", "collection", "ecommerce", "creative"].includes(project.kind)) {
@@ -1613,7 +1623,7 @@
               </div>` : ""}
               ${item.workflow ? `<div class="workflow">${item.workflow.map((step, stepIndex) => `<div class="workflow-step"><span>Step 0${stepIndex + 1}</span><strong>${step}</strong></div>`).join("")}</div>` : ""}
               <div class="planning-role">${item.roles.map(role => `<span>${role}</span>`).join("")}</div>
-              <button class="deck-open" type="button" data-case-index="${index}"><span>${project.kind === "creative" ? "逐页查看作品" : "查看完整方案"}</span><span>${item.viewer === "web" ? "完整长页" : item.viewer === "poster" ? "海报大图" : `${item.slides} 页`} ↗</span></button>
+              <button class="deck-open" type="button" data-case-index="${index}"><span>${project.kind === "creative" ? "逐页查看作品" : "探索完整项目"}</span><span>${item.viewer === "web" ? "项目长页" : item.viewer === "poster" ? "海报大图" : `${item.slides} 页`} ↗</span></button>
             </div>
           </article>`).join("");
         document.querySelectorAll(".deck-open").forEach(button => button.addEventListener("click", () => openCase(Number(button.dataset.caseIndex))));
@@ -1676,11 +1686,11 @@
       webViewer.hidden = false;
       posterViewer.hidden = true;
       document.querySelector("#webTitle").textContent = selectedCase.title;
-      document.querySelector("#webSubtitle").textContent = activeCollectionProject.kind === "ecommerce" ? "Complete campaign series" : "Complete brand visual";
+      document.querySelector("#webSubtitle").textContent = "PROJECT STORY / 完整项目";
       document.querySelector("#webBack span").textContent = `返回${activeCollectionProject.title}`;
       document.querySelector("#webOpenNew").href = selectedCase.web;
       const frame = document.querySelector("#webFrame");
-      frame.title = `${selectedCase.title}完整品牌视觉方案`;
+      frame.title = `${selectedCase.title}完整项目`;
       frame.src = selectedCase.web;
       dialog.scrollTo({ top: 0, behavior: reducedMotion ? "auto" : "smooth" });
     }
@@ -1720,12 +1730,21 @@
     }
 
     function closeWeb() {
+      if (activeCollectionProject?.kind === "community") { dialog.close(); return; }
       webViewer.hidden = true;
       document.querySelector("#webFrame").src = "about:blank";
       document.querySelector("#planningProject").hidden = false;
       dialog.scrollTo({ top: 0, behavior: reducedMotion ? "auto" : "smooth" });
     }
 
+
+    window.addEventListener("message", event => {
+      const frame = document.querySelector("#webFrame");
+      if (event.origin !== location.origin || event.source !== frame.contentWindow) return;
+      if (event.data?.type === "portfolio-case-back") closeWeb();
+      if (event.data?.type === "portfolio-case-close") dialog.close();
+    });
+    
     function closePoster() {
       posterViewer.hidden = true;
       document.querySelector("#planningProject").hidden = false;
