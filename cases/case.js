@@ -1,10 +1,17 @@
 const parentOrigin = window.location.origin;
 const returnLink = document.querySelector('[data-return]');
 if (window.parent !== window) {
+  window.parent.postMessage({ type: 'portfolio-case-title', title: document.title.split(' — ')[0] }, parentOrigin);
   returnLink.textContent = '← 返回项目';
   returnLink.addEventListener('click', event => {
     event.preventDefault();
     window.parent.postMessage({ type: 'portfolio-case-back' }, parentOrigin);
+  });
+  document.querySelectorAll('a[href^="../index.html"]:not([data-return])').forEach(link => {
+    link.addEventListener('click', event => {
+      event.preventDefault();
+      window.parent.postMessage({ type: 'portfolio-case-close' }, parentOrigin);
+    });
   });
 }
 const links = [...document.querySelectorAll('.nav-links a')];

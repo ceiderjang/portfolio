@@ -1743,6 +1743,9 @@
       if (event.origin !== location.origin || event.source !== frame.contentWindow) return;
       if (event.data?.type === "portfolio-case-back") closeWeb();
       if (event.data?.type === "portfolio-case-close") dialog.close();
+      if (event.data?.type === "portfolio-case-title" && typeof event.data.title === "string") {
+        document.querySelector("#webTitle").textContent = event.data.title;
+      }
     });
     
     function closePoster() {
